@@ -2,7 +2,7 @@ import librosa
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 # '%matplotlib inline
 import os
 import csv
@@ -20,7 +20,7 @@ for i in range(1, 21):
     header += f' mfcc{i}'
 header += ' label'
 header = header.split()
-'''
+
 file = open('data.csv', 'w', newline='')
 with file:
     writer = csv.writer(file)
@@ -30,7 +30,7 @@ for g in genres:
     filenamewhohidden = (filename for filename in os.listdir(f'./genres/{g}')if not filename.startswith('.'))
     for filename in filenamewhohidden:
         songname = f'./genres/{g}/{filename}'
-        y, sr = librosa.load(songname, mono=True, duration=30)
+        y, sr = librosa.load(songname, mono=True, duration=3)
         chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
         rmse = librosa.feature.rms(y=y)
         spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
@@ -48,7 +48,7 @@ for g in genres:
             writer.writerow(to_append.split())
 
 # reading dataset from csv
-'''
+
 data = pd.read_csv('data.csv')
 data.head()
 
