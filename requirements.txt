@@ -1,0 +1,3 @@
+librosa
+# Is tensorflow needed? It's in the imports but never used
+tensorflow
