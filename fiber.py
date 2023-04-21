@@ -84,7 +84,7 @@ model.compile(optimizer='adam',
 
 history = model.fit(X_train,
                     y_train,
-                    epochs=20,
+                    epochs=50,
                     batch_size=128)
 
 # calculate accuracy
@@ -92,6 +92,12 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 #testen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #exportModel = model.save()
 print('test_acc: ', test_acc)
+
+#show loss + accuracy
+history_df = pd.DataFrame(history.history)
+history_df.loc[0:, ['loss', 'accuracy']].plot()
+plt.savefig('loss_accuracy_50_epochs.png')
+plt.show()
 
 # predictions
 predictions = model.predict(X_test)
