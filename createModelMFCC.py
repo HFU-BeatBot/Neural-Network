@@ -63,7 +63,7 @@ history = model.fit(X_train,
 
 # calculate accuracy
 test_loss, test_acc = model.evaluate(X_test, y_test)
-# testen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# testen !
 # exportModel = model.save()
 print('test_acc: ', test_acc)
 
