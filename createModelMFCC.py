@@ -2,7 +2,8 @@ import librosa
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+# '%matplotlib inline
 import os
 import csv
 # Preprocessing
@@ -36,13 +37,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # creating a model
 model = models.Sequential()
-model.add(layers.Dense(512, activation='relu', input_shape=(X_train.shape[1],)))
-layers.Dropout(rate=0.3),  # apply 30% dropout to the next layer
-model.add(layers.Dense(256, activation='relu'))
-layers.Dropout(rate=0.3),
+model.add(layers.Dense(256, activation='relu', input_shape=(X_train.shape[1],)))
+
 model.add(layers.Dense(128, activation='relu'))
-layers.Dropout(rate=0.3),
-model.add(layers.Dense(20, activation='softmax'))
+
+model.add(layers.Dense(64, activation='relu'))
+
+model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
@@ -63,18 +64,9 @@ history = model.fit(X_train,
 
 # calculate accuracy
 test_loss, test_acc = model.evaluate(X_test, y_test)
-# testen !
+# testen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # exportModel = model.save()
 print('test_acc: ', test_acc)
-
-#show loss + val_loss
-history_df = pd.DataFrame(history.history)
-history_df.loc[0:, ['loss', 'val_loss']].plot()
-plt.xlabel("epochs")
-plt.ylabel("loss")
-plt.title("loss + val_loss")
-plt.savefig('loss_val_loss_with_earlystopping.png')
-plt.show()
 
 # predictions
 predictions = model.predict(X_test)
