@@ -13,6 +13,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 import keras
 from keras import models
 from keras import layers
+from keras import callbacks
 
 
 data = pd.read_csv('data.csv')
@@ -48,9 +49,17 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
+early_stopping = callbacks.EarlyStopping(
+    min_delta=0.002, # minimium amount of change to count as an improvement
+    patience=5, # how many epochs to wait before stopping
+    restore_best_weights=True,
+)
+
 history = model.fit(X_train,
                     y_train,
-                    epochs=20,
+                    validation_data=(X_test, y_test),
+                    epochs=200,
+                    callbacks=[early_stopping],
                     batch_size=128)
 
 # calculate accuracy
