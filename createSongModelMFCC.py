@@ -32,6 +32,7 @@ mfcc = librosa.feature.mfcc(y=y, sr=sr)
 songToArray= []
 for e in mfcc:
     songToArray.append(np.mean(e))
+    songToArray.append(np.std(e))
 
 numpySongArray = np.array([songToArray])
 numpySongArray = scaler.transform(numpySongArray)
