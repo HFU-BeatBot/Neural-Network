@@ -16,7 +16,9 @@ from keras import models
 from keras import layers
 from keras import callbacks
 
-
+tf.keras.utils.set_random_seed(
+    1
+)
 data = pd.read_csv('data.csv')
 data.head()
 
@@ -38,15 +40,28 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
 # creating a model
 model = models.Sequential()
-model.add(layers.Dense(1028, activation='relu', input_shape=(X_train.shape[1],)))
-layers.Dropout(rate=0.3),  # apply 30% dropout to the next layer
+
+model.add(layers.Dense(256, activation='relu', input_shape=(X_train.shape[1],)))
+layers.Dropout(rate=0.1),
+
+model.add(layers.Dense(1028, activation='relu'))
+layers.Dropout(rate=0.1),  # apply 30% dropout to the next layer
+
 model.add(layers.Dense(512, activation='relu'))
-layers.Dropout(rate=0.3),
+layers.Dropout(rate=0.2),
+
+model.add(layers.Dense(512, activation='relu'))
+layers.Dropout(rate=0.2),
+
 model.add(layers.Dense(256, activation='relu'))
-layers.Dropout(rate=0.3),
+layers.Dropout(rate=0.4),
+
 model.add(layers.Dense(128, activation='relu'))
-layers.Dropout(rate=0.3),
+layers.Dropout(rate=0.5),
+
 model.add(layers.Dense(10, activation='softmax'))
+
+
 
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
@@ -63,7 +78,7 @@ history = model.fit(X_train,
                     validation_data=(X_test, y_test),
                     epochs=200,
                     callbacks=[early_stopping],
-                    batch_size=128)
+                    batch_size=30)
 
 # calculate accuracy
 test_loss, test_acc = model.evaluate(X_test, y_test)
