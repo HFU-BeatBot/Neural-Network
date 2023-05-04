@@ -6,6 +6,7 @@ import tensorflow as tf
 import os
 import csv
 
+from keras.legacy_tf_layers.normalization import BatchNormalization
 from matplotlib import pyplot as plt
 # Preprocessing
 from sklearn.model_selection import train_test_split
@@ -42,34 +43,32 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 model = models.Sequential()
 
 model.add(layers.Dense(256, activation='relu', input_shape=(X_train.shape[1],)))
-layers.Dropout(rate=0.1),
+layers.Dropout(rate=0.3),  # apply 30% dropout to the next layer
 
 model.add(layers.Dense(1028, activation='relu'))
-layers.Dropout(rate=0.1),  # apply 30% dropout to the next layer
+layers.Dropout(rate=0.3),
 
 model.add(layers.Dense(512, activation='relu'))
-layers.Dropout(rate=0.2),
+layers.Dropout(rate=0.3),
 
 model.add(layers.Dense(512, activation='relu'))
-layers.Dropout(rate=0.2),
+layers.Dropout(rate=0.3),
 
 model.add(layers.Dense(256, activation='relu'))
-layers.Dropout(rate=0.4),
+layers.Dropout(rate=0.3),
 
 model.add(layers.Dense(128, activation='relu'))
-layers.Dropout(rate=0.5),
+layers.Dropout(rate=0.3),
 
 model.add(layers.Dense(10, activation='softmax'))
-
-
 
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
 early_stopping = callbacks.EarlyStopping(
-    min_delta=0.002, # minimium amount of change to count as an improvement
-    patience=5, # how many epochs to wait before stopping
+    min_delta=0.002,  # minimium amount of change to count as an improvement
+    patience=5,  # how many epochs to wait before stopping
     restore_best_weights=True,
 )
 
@@ -78,11 +77,11 @@ history = model.fit(X_train,
                     validation_data=(X_test, y_test),
                     epochs=200,
                     callbacks=[early_stopping],
-                    batch_size=30)
+                    batch_size=60)
 
 # calculate accuracy
 test_loss, test_acc = model.evaluate(X_test, y_test)
-# testen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# testen !
 # exportModel = model.save()
 print('test_acc: ', test_acc)
 
