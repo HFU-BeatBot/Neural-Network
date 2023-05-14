@@ -33,18 +33,17 @@ print("tracks_df", tracks_df)
 print("genres_df", genres_df)
 print("mfcc_data", mfcc_data)
 
-# Filtere die Genres basierend auf der Spalte "parent"
-#  genres = ['Blues', 'Classical', 'Country', 'Disco', 'Hiphop', 'Jazz', 'Metal', 'Pop', 'Reggae', 'Rock']
-genres = ['Experimental', 'Electronic', 'Rock', 'Instrumental', 'Pop', 'Folk', 'Hip-Hop', 'International', 'Jazz'
-          'Classical', 'Country', 'Spoken', 'Blues', 'Soul-RnB', 'Old-Time / Historic']
-filtered_genres_df = genres_df[genres_df['title'].isin(genres)]
-filtered_genres_df = filtered_genres_df.sort_values(by=['#tracks'], ascending=True)
-filtered_genres_df.to_csv('filtered_genres.csv', sep=',')  # csv mit Anzahl an Tracks pro Genre
-
 # Top Level Genres
 ''' print('{} top-level genres'.format(len(genres_file['top_level'].unique())))
-genres_file.loc[genres['top_level'].unique()].sort_values('#tracks', ascending=False) '''
+genres_file.loc[genres['top_level'].unique()].sort_values('#tracks', ascending=False) 
+Siehe https://nbviewer.org/github/mdeff/fma/blob/outputs/usage.ipynb'''
 
+# Filtere die Genres basierend auf der Spalte "parent"
+genres = ['Experimental', 'Electronic', 'Rock', 'Instrumental', 'Pop', 'Folk', 'Hip-Hop', 'International', 'Jazz'
+          'Classical', 'Country', 'Spoken', 'Blues', 'Soul-RnB', 'Old-Time / Historic']
+filtered_genres_df = genres_df[genres_df['title'].isin(genres)]  # Die 16 Top Level Genres Filtern
+filtered_genres_df = filtered_genres_df.sort_values(by=['#tracks'], ascending=True)  # Nach Column #tracks sortieren
+filtered_genres_df.to_csv('filtered_genres.csv', sep=',')  # csv mit Anzahl an Tracks pro Genre
 
 # Gebe die gefilterten Genres aus
 print("filtered_genres_df", filtered_genres_df)
