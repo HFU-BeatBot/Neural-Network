@@ -84,6 +84,7 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 
 # exportModel = model.save()
 model.save("model.h5")  # Export Model as h.5
+print("Saved model to disk as .h5")
 print('test_acc: ', test_acc)
 
 #show loss + val_loss
