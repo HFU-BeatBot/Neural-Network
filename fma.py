@@ -34,8 +34,11 @@ print("genres_df", genres_df)
 print("mfcc_data", mfcc_data)
 
 # Filtere die Genres basierend auf der Spalte "parent"
-genres = ['Blues', 'Classical', 'Country', 'Disco', 'Hiphop', 'Jazz', 'Metal', 'Pop', 'Reggae', 'Rock']
+#  genres = ['Blues', 'Classical', 'Country', 'Disco', 'Hiphop', 'Jazz', 'Metal', 'Pop', 'Reggae', 'Rock']
+genres = ['Experimental', 'Electronic', 'Rock', 'Instrumental', 'Pop', 'Folk', 'Hip-Hop', 'International', 'Jazz'
+          'Classical', 'Country', 'Spoken', 'Blues', 'Soul-RnB', 'Old-Time / Historic']
 filtered_genres_df = genres_df[genres_df['title'].isin(genres)]
+filtered_genres_df = filtered_genres_df.sort_values(by=['#tracks'], ascending=True)
 filtered_genres_df.to_csv('filtered_genres.csv', sep=',')  # csv mit Anzahl an Tracks pro Genre
 
 # Top Level Genres
