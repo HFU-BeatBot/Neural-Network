@@ -6,13 +6,13 @@ import tensorflow as tf
 import os
 import csv
 
+from joblib import dump
 from keras.legacy_tf_layers.normalization import BatchNormalization
 from matplotlib import pyplot as plt
 # Preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 # Keras
-import keras
 from keras import models
 from keras import layers
 from keras import callbacks
@@ -35,6 +35,8 @@ print(y)
 # normalizing
 scaler = StandardScaler()
 X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
+dump(scaler, open('scaler.bin', 'wb'), compress=True)  # save scaler
+print("Saved scaler to disk as .bin")
 
 # spliting of dataset into train and test dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)

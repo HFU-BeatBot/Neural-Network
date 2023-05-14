@@ -20,7 +20,8 @@ from keras import layers
 #header = 'filename chroma_stft rmse spectral_centroid spectral_bandwidth rolloff zero_crossing_rate'
 header = 'filename'
 for i in range(1, 21):
-    header += f' mfcc{i}'
+    header += f' mfcc{i}_mean'
+    header += f' mfcc{i}_std'
 header += ' label'
 header = header.split()
 
@@ -45,6 +46,7 @@ for g in genres:
         to_append = f'{filename}'
         for e in mfcc:
             to_append += f' {np.mean(e)}'
+            to_append += f' {np.std(e)}'
         to_append += f' {g}'
         file = open('data.csv', 'a', newline='')
         with file:
