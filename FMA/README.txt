@@ -18,7 +18,7 @@ The model is implemented using the Keras library and consists of a multi-layer n
 
 ### Data
 - All metadata and features for all tracks are distributed in fma_metadata.zip (342 MiB).
-- fma_medium.zip: 25,000 tracks of 30s, 16 unbalanced genres (22 GiB)
+- Download this Data-Package from this link directly: https://os.unil.cloud.switch.ch/fma/fma_metadata.zip or visit this site: https://github.com/mdeff/fma
 
 - tracks.csv: per track metadata such as ID, title, artist, genres, tags and play counts, for all 106,574 tracks.
 - genres.csv: all 163 genres with name and parent (used to infer the genre hierarchy and top-level genres).
