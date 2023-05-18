@@ -23,7 +23,7 @@ tf.keras.utils.set_random_seed(
 data = pd.read_csv('data.csv')
 data.head()
 
-# Dropping unneccesary columns
+# Dropping unnecessary columns
 data = data.drop(['filename'], axis=1)
 data.head()
 
@@ -38,7 +38,7 @@ X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
 dump(scaler, open('scaler.bin', 'wb'), compress=True)  # save scaler
 print("Saved scaler to disk as .bin")
 
-# spliting of dataset into train and test dataset
+# splitting of dataset into train and test dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
 # creating a model
@@ -69,7 +69,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 early_stopping = callbacks.EarlyStopping(
-    min_delta=0.002,  # minimium amount of change to count as an improvement
+    min_delta=0.002,  # minimum amount of change to count as an improvement
     patience=5,  # how many epochs to wait before stopping
     restore_best_weights=True,
 )
@@ -89,7 +89,7 @@ model.save("model.h5")  # Export Model as h.5
 print("Saved model to disk as .h5")
 print('test_acc: ', test_acc)
 
-#show loss + val_loss
+# show loss + val_loss
 history_df = pd.DataFrame(history.history)
 history_df.loc[0:, ['loss', 'val_loss']].plot()
 plt.xlabel("epochs")
@@ -101,4 +101,3 @@ plt.show()
 # predictions
 predictions = model.predict(X_test)
 np.argmax(predictions[0])
-
