@@ -43,6 +43,8 @@ print(genres_data)
 # Filter out track_id & mfcc std & mean in features.csv
 features_data = pd.read_csv(features_file, sep=';', header=[0, 1, 2, 3], low_memory=False)
 features_data = features_data.drop(features_data.iloc[:, 1:293], axis=1)  # Drop column 1-293 (293-313 mfcc mean)
-features_data = features_data.drop(features_data.iloc[:, 21:82], axis=1)  # Drop column 21-80
-features_data = features_data.drop(features_data.iloc[:, 40:168], axis=1)  # Only track_id, mfcc_mean & mfcc_std left
+features_data = features_data.drop(features_data.iloc[:, 21:81], axis=1)  # Drop column 21-81
+features_data = features_data.drop(features_data.iloc[:, 41:168], axis=1)  # Only track_id, mfcc_mean & mfcc_std left
+#  column_headers_features = list(features_data.columns.values)
+#  print("The Column Header for tracks :", column_headers_features)
 print(features_data)
