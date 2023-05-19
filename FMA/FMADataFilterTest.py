@@ -10,11 +10,7 @@ tracks_data = pd.read_csv(tracks_file, header=[0, 1, 2], low_memory=False)
 tracks_data = tracks_data.drop(tracks_data.iloc[:, 1:40], axis=1)  # Drop column 1-40
 tracks_data = tracks_data.drop(tracks_data.iloc[:, 2:14], axis=1)  # Drop column 2-14
 
-# Get column names
-column_headers_tracks = list(tracks_data.columns.values)
-# print("The Column Header for tracks :", column_headers_tracks)
-
-# Change column names + drop first 2 rows
+# Change column names + merge header
 tracks_data.columns = ['_'.join(col) for col in tracks_data.columns.values]  # Merge Headers
 tracksColumnsList = ['track_id', 'label']
 tracks_data.columns = tracksColumnsList  # Rename Column Header
@@ -67,12 +63,12 @@ print(features_data, "\n")
 mergedData = pd.concat([features_data, tracks_data], axis=1, join='inner')  # Merge Data Frames
 mergedData = mergedData.drop(mergedData.columns[41], axis=1)  # Drop duplicate track_id
 rearrangedColumns = ['mfcc1_mean', 'mfcc1_std', 'mfcc2_mean', 'mfcc2_std', 'mfcc3_mean', 'mfcc3_std',
-                       'mfcc4_mean', 'mfcc4_std', 'mfcc5_std', 'mfcc5_mean', 'mfcc6_mean', 'mfcc6_std', 'mfcc7_mean',
-                       'mfcc7_std', 'mfcc8_mean', 'mfcc8_std', 'mfcc9_mean', 'mfcc9_std', 'mfcc10_mean', 'mfcc10_std',
-                       'mfcc11_mean', 'mfcc11_std', 'mfcc12_mean', 'mfcc12_std', 'mfcc13_mean', 'mfcc13_std',
-                       'mfcc14_mean', 'mfcc14_std', 'mfcc15_mean', 'mfcc15_std', 'mfcc16_mean', 'mfcc16_std',
-                       'mfcc17_mean', 'mfcc17_std', 'mfcc18_mean', 'mfcc18_std', 'mfcc19_mean', 'mfcc19_std',
-                       'mfcc20_mean', 'mfcc20_std', 'label']
+                     'mfcc4_mean', 'mfcc4_std', 'mfcc5_std', 'mfcc5_mean', 'mfcc6_mean', 'mfcc6_std', 'mfcc7_mean',
+                     'mfcc7_std', 'mfcc8_mean', 'mfcc8_std', 'mfcc9_mean', 'mfcc9_std', 'mfcc10_mean', 'mfcc10_std',
+                     'mfcc11_mean', 'mfcc11_std', 'mfcc12_mean', 'mfcc12_std', 'mfcc13_mean', 'mfcc13_std',
+                     'mfcc14_mean', 'mfcc14_std', 'mfcc15_mean', 'mfcc15_std', 'mfcc16_mean', 'mfcc16_std',
+                     'mfcc17_mean', 'mfcc17_std', 'mfcc18_mean', 'mfcc18_std', 'mfcc19_mean', 'mfcc19_std',
+                     'mfcc20_mean', 'mfcc20_std', 'label']
 mergedData = mergedData[rearrangedColumns]  # Rearrange Columns
 print("Merged dataframe: ", "\n")
 print(mergedData)
