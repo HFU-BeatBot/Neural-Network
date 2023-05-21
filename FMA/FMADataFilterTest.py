@@ -85,7 +85,7 @@ merged_old_genres_data = merged_old_genres_data.replace({  # Replace old genre f
         'Classical': 'classical',
         'Country': 'country',
         'Disco': 'disco',
-        'Hip-hop': 'hiphop',
+        'Hip-Hop': 'hiphop',
         'Jazz': 'jazz',
         'Metal': 'metal',
         'Pop': 'pop',
@@ -93,7 +93,7 @@ merged_old_genres_data = merged_old_genres_data.replace({  # Replace old genre f
         'Rock': 'rock'
     }
 })
-
+merged_old_genres_data.to_csv('merged_old_genres_data.csv')  # Write to csv without line numbering
 print("\n", "Old genres merged dataframe", "\n")
 print(merged_old_genres_data)
 
@@ -114,6 +114,7 @@ old_features_data = old_features_data.drop(['filename'], axis=1)  # Dropping col
         'rock': 'Rock'
     }
 })'''
+old_features_data.to_csv('old_features_data.csv')  # Write to csv without line numbering
 print("\n", "Old features dataframe", "\n")
 print(old_features_data)
 
