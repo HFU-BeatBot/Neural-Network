@@ -1,10 +1,10 @@
 import pandas as pd
 
 # Paths to the files
-old_features_file = "C:/Users/Dominik/PycharmProjects/Neural-Network/data.csv"
-features_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/features.csv"
-tracks_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/tracks.csv"
-genres_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/genres.csv"
+old_features_file = "C:/Users/Domi/PycharmProjects/Neural-Network/data.csv"
+features_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/features.csv"
+tracks_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/tracks.csv"
+genres_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/genres.csv"
 
 # Drop everything in tracks_file but track_id & genre_top
 tracks_data = pd.read_csv(tracks_file, header=[0, 1, 2], low_memory=False)
@@ -43,7 +43,7 @@ print(genres_data, "\n")
 #  Reggae - Dub 880 Songs
 
 # Filter out track_id & mfcc std & mean in features.csv
-features_data = pd.read_csv(features_file, sep=';', header=[0, 1, 2, 3, 4], low_memory=False)
+features_data = pd.read_csv(features_file, sep=',', header=[0, 1, 2, 3, 4], low_memory=False)
 features_data = features_data.drop(features_data.iloc[:, 1:293], axis=1)  # Drop column 1-293 (293-313 mfcc mean)
 features_data = features_data.drop(features_data.iloc[:, 21:81], axis=1)  # Drop column 21-81
 features_data = features_data.drop(features_data.iloc[:, 41:168], axis=1)  # Only track_id, mfcc_mean & mfcc_std left
@@ -79,13 +79,28 @@ genres_old = ['Blues', 'Classical', 'Country', 'Disco', 'Hip-Hop', 'Jazz', 'Meta
               'Reggae - Dub', 'Rock']
 merged_old_genres_data = merged_data[merged_data['label'].isin(genres_old)]
 merged_old_genres_data = merged_old_genres_data.sort_values('label')  # Sort by column label
+merged_old_genres_data = merged_old_genres_data.replace({  # Replace old genre formatting with new one
+    'label': {
+        'Blues': 'blues',
+        'Classical': 'classical',
+        'Country': 'country',
+        'Disco': 'disco',
+        'Hip-hop': 'hiphop',
+        'Jazz': 'jazz',
+        'Metal': 'metal',
+        'Pop': 'pop',
+        'Reggae - Dub': 'reggae',
+        'Rock': 'rock'
+    }
+})
+
 print("\n", "Old genres merged dataframe", "\n")
 print(merged_old_genres_data)
 
 # Reading and formatting old Data
 old_features_data = pd.read_csv(old_features_file, low_memory=False)
 old_features_data = old_features_data.drop(['filename'], axis=1)  # Dropping column filename
-old_features_data = old_features_data.replace({  # Replace old genre formatting with new one
+'''old_features_data = old_features_data.replace({  # Replace old genre formatting with new one
     'label': {
         'blues': 'Blues',
         'classical': 'Classical',
@@ -98,7 +113,7 @@ old_features_data = old_features_data.replace({  # Replace old genre formatting 
         'reggae': 'Reggae - Dub',
         'rock': 'Rock'
     }
-})
+})'''
 print("\n", "Old features dataframe", "\n")
 print(old_features_data)
 
