@@ -16,37 +16,39 @@ features_df = pd.read_csv(features_file, index_col=0, header=[0, 1, 2])
 tracks_df = pd.read_csv(tracks_file, index_col=0, header=[0, 1])
 genres_df = pd.read_csv(genres_file, index_col=0)
 
-# Filter the MFCC data (mean and standard deviation)
-mfcc_data = features_df.loc[:, pd.IndexSlice["mfcc", ["mean", "std"]]]
-
-# Restructure the MultiIndex
-mfcc_data.columns = [f"{feature}_{stat}_{number}" for feature, stat, number in mfcc_data.columns]
-
-# Output the MFCC data
+# Output the MFA data
 print("tracks_df", tracks_df)
 print("genres_df", genres_df)
-print("mfcc_data", mfcc_data)
+print("feature_df", features_df)
 
+# Extract the relevant genres from the genres.csv file
+filtered_genres = genres_df[genres_df['title'].isin(['Blues', 'Classical', 'Country', 'Disco', 'Hip-Hop', 'Jazz', 'Metal', 'Pop', 'Reggae - Dub', 'Rock'])]
+print("filtered_genres", filtered_genres)
+
+# Filter the MFCC data (mean and standard deviation)
+filtered_features = features_df.loc[:, pd.IndexSlice["mfcc", ["mean", "std"]]]
+
+# Restructure the MultiIndex
+filtered_features.columns = [f"{feature}_{stat}_{number}" for feature, stat, number in filtered_features.columns]
+
+# Output the mfcc features
+print("filtered_features", filtered_features)
+
+#----------------------PROBLEM-START-------------------------------------
 # Extract the relevant columns from the tracks.csv file
-#tracks_metadata = tracks_df[("track", "genre_top")]
+tracks_metadata = tracks_df[("track", "genre_top")]
 
 # Filter the rows based on the desired genres
-#filtered_tracks = tracks_df[tracks_metadata.isin(filtered_genres)]
-
-# Output the filtered tracks
-#print("filtered_tracks", filtered_tracks)
-
-# Extract the features for the filtered tracks
-#filtered_features = mfcc_data.loc[genres_df.index]
-#print("filtered_features", filtered_features)
-
+filtered_tracks = tracks_metadata[tracks_metadata.isin(filtered_genres)]
+print("filtered_tracks", filtered_tracks)
 
 # Extract the target variables (Genre Labels)
-labels = tracks_df[("track", "genre_top")].values
+labels = tracks_metadata.values
 print("labels", labels)
+#----------------------PROBLEM-END---------------------------------------
 
 # Split the data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(mfcc_data, labels, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(filtered_features, labels, test_size=0.2, random_state=42)
 
 # Scale the data
 scaler = StandardScaler()
