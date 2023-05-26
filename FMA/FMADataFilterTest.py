@@ -1,10 +1,11 @@
 import pandas as pd
 
 # Paths to the files
-old_features_file = "C:/Users/Domi/PycharmProjects/Neural-Network/data.csv"
-features_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/features.csv"
-tracks_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/tracks.csv"
-genres_file = "C:/Users/Domi/Desktop/FMA/fma_metadata/genres.csv"
+old_features_file = "C:/Users/Dominik/PycharmProjects/Neural-Network/data.csv"
+features_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/features.csv"
+tracks_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/tracks.csv"
+genres_file = "C:/Users/Dominik/Desktop/FMA/fma_metadata/genres.csv"
+folder_path = "C:/Users/Dominik/Desktop/FMA/fma_medium"
 
 # Drop everything in tracks_file but track_id & genre_top
 tracks_data = pd.read_csv(tracks_file, header=[0, 1, 2], low_memory=False)
@@ -19,14 +20,11 @@ print("Tracks dataframe: ", "\n")
 print(tracks_data, "\n")
 
 # Filter out rows without explicit genre
-genres = ['Electronic', 'Rock', 'Instrumental', 'Pop', 'Folk', 'Hip-Hop', 'International', 'Jazz'
-          'Classical', 'Country', 'Spoken', 'Blues', 'Soul-RnB']
+genres = ['Blues', 'Classical', 'Country', 'Disco', 'Hip-Hop'
+          'Jazz', 'Metal', 'Pop', 'Reggae - Dub', 'Rock']
 filtered_tracks_data = tracks_data[tracks_data['label'].isin(genres)]
 print("Filtered Tracks dataframe: ", "\n")
 print(filtered_tracks_data, "\n")
-
-#  Es gibt viele tracks mit mehreren Genre in tracks.csv
-#  Waere jetzt die Frage ob wir die rausfiltern oder was wir mit denen machen
 
 # top_level genres + metal variations in genres.csv
 genres_extended = ['Electronic', 'Rock', 'Instrumental', 'Pop', 'Folk', 'Hip-Hop', 'International',
@@ -38,12 +36,8 @@ genres_data = genres_data.sort_values(by=['#tracks'])  # sort by number of track
 print("Genres dataframe: ", "\n")
 print(genres_data, "\n")
 
-#  Metal ist in der top_level category Rock
-#  Disco nur 300 Songs
-#  Reggae - Dub 880 Songs
-
 # Filter out track_id & mfcc std & mean in features.csv
-features_data = pd.read_csv(features_file, sep=',', header=[0, 1, 2, 3, 4], low_memory=False)
+features_data = pd.read_csv(features_file, sep=';', header=[0, 1, 2, 3, 4], low_memory=False)
 features_data = features_data.drop(features_data.iloc[:, 1:293], axis=1)  # Drop column 1-293 (293-313 mfcc mean)
 features_data = features_data.drop(features_data.iloc[:, 21:81], axis=1)  # Drop column 21-81
 features_data = features_data.drop(features_data.iloc[:, 41:168], axis=1)  # Only track_id, mfcc_mean & mfcc_std left
@@ -93,28 +87,12 @@ merged_old_genres_data = merged_old_genres_data.replace({  # Replace old genre f
         'Rock': 'rock'
     }
 })
-merged_old_genres_data.to_csv('merged_old_genres_data.csv')  # Write to csv without line numbering
 print("\n", "Old genres merged dataframe", "\n")
 print(merged_old_genres_data)
 
 # Reading and formatting old Data
 old_features_data = pd.read_csv(old_features_file, low_memory=False)
 old_features_data = old_features_data.drop(['filename'], axis=1)  # Dropping column filename
-'''old_features_data = old_features_data.replace({  # Replace old genre formatting with new one
-    'label': {
-        'blues': 'Blues',
-        'classical': 'Classical',
-        'country': 'Country',
-        'disco': 'Disco',
-        'hiphop': 'Hip-Hop',
-        'jazz': 'Jazz',
-        'metal': 'Metal',
-        'pop': 'Pop',
-        'reggae': 'Reggae - Dub',
-        'rock': 'Rock'
-    }
-})'''
-old_features_data.to_csv('old_features_data.csv')  # Write to csv without line numbering
 print("\n", "Old features dataframe", "\n")
 print(old_features_data)
 
