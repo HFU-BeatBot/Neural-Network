@@ -17,7 +17,9 @@ from keras import models
 from keras import layers
 from joblib import load
 
+print("classifySongOnModel ready")
 def classifySongOnModel(song, model, scaler):
+    print("Start classifySongOnModel()")
     # Example of how the song string could look like:
     # song = 'Bob Marley & The Wailers - Buffalo Soldier (Official Music Video).mp3'
 
@@ -43,9 +45,10 @@ def classifySongOnModel(song, model, scaler):
     print(numpySongArray)
 
     # the model predicts the genre of that song and print it into the console and return it
-    model = tf.keras.models.load_model
+    model = tf.keras.models.load_model(model)
     prediction = model.predict(numpySongArray)
     print(np.argmax(prediction[0]))
+    print("End classifySongOnModel()")
     return np.argmax(prediction[0])
 
 
