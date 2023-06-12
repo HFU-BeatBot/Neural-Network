@@ -1,3 +1,4 @@
+
 import csv
 import os
 
@@ -9,7 +10,7 @@ from addNoise import addNoise
 
 
 def generateArrayOfMeanAndSTD(song, filename, genre):
-    y, sr = librosa.load(song, mono=True, duration=3)
+    y, sr = librosa.load(song, mono=True)
     mfcc = librosa.feature.mfcc(y=y, sr=sr)
     # to_append = f'{filename} {np.mean(chroma_stft)} {np.mean(rmse)} {np.mean(spec_cent)} {np.mean(spec_bw)} {np.mean(rolloff)} {np.mean(zcr)}'
     to_append = f'{filename}'
@@ -56,7 +57,7 @@ def makeCSV(partLength = 5):
                     #after that it just export it and it takes the data out of the new wav
                     newAudioPart = FullAudio[j: j + partLength * 1000]
                     newAudioPart.export('tmp.wav', format='wav')
-                    to_append = generateArrayOfMeanAndSTD(songname + str(i), 'tmp.wav', g)
+                    to_append = generateArrayOfMeanAndSTD('tmp.wav', filename + str(i),  g)
                     #filling the data of the wav part into the csv
                     file = open('data.csv', 'a', newline='')
                     with file:
@@ -67,7 +68,7 @@ def makeCSV(partLength = 5):
                     #creating gausian noised wav file out of the wav part
                     signal, sr = librosa.load('tmp.wav')
                     addNoise(signal, sr, 'tmp.wav')
-                    to_append = generateArrayOfMeanAndSTD(songname + str(i), 'tmp.wav', g)
+                    to_append = generateArrayOfMeanAndSTD('tmp.wav', filename + '_gaussian.'+ str(i), g)
                     # filling the data of the wav part into the csv
                     file = open('data.csv', 'a', newline='')
                     with file:
@@ -75,7 +76,11 @@ def makeCSV(partLength = 5):
                         writer.writerow(to_append.split())
             #Otherwise the song is shorter than length we want and it creates the value normally
             else:
-                to_append = generateArrayOfMeanAndSTD(songname, filename, g)
+                print("else fall")
+                newAudioPart = FullAudio
+                newAudioPart.export('tmp.wav', format='wav')
+                print("export geklappt")
+                to_append = generateArrayOfMeanAndSTD('tmp.wav', filename, g)
                 file = open('data.csv', 'a', newline='')
                 with file:
                     writer = csv.writer(file)
@@ -83,9 +88,11 @@ def makeCSV(partLength = 5):
                 # creating gausian noised wav file out of the wav part
                 signal, sr = librosa.load('tmp.wav')
                 addNoise(signal, sr, 'tmp.wav')
-                to_append = generateArrayOfMeanAndSTD(songname + str(i), filename, g)
+                to_append = generateArrayOfMeanAndSTD('tmp.wav', filename + '_gaussian', g)
                 # filling the data of the wav part into the csv
                 file = open('data.csv', 'a', newline='')
                 with file:
                     writer = csv.writer(file)
                     writer.writerow(to_append.split())
+makeCSV();
+print("Done")

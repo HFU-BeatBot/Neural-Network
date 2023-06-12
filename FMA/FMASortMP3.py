@@ -31,6 +31,14 @@ metalIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/d
 popIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/pop")
 reggaeIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/reggae")
 rockIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/rock")
+
+# fma_small Genres
+folkIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/folk")
+experimentalIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/experimental")
+internationalIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/international")
+electronicIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/electronic")
+instrumentalIsExist = os.path.exists("C:/Users/Dominik/PycharmProjects/Neural-Network/data/instrumental")
+
 if not dataIsExist:
     # Create data folder
     os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data")
@@ -39,6 +47,26 @@ if not bluesIsExist:
     # Create blues folder
     os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/blues")
     print("Blues folder created.")
+if not folkIsExist:
+    # Create folk folder
+    os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/folk")
+    print("Folk folder created.")
+if not experimentalIsExist:
+    # Create Experimental folder
+    os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/experimental")
+    print("Experimental folder created.")
+if not internationalIsExist:
+    # Create International folder
+    os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/international")
+    print("International folder created.")
+if not electronicIsExist:
+    # Create Electronic folder
+    os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/electronic")
+    print("Electronic folder created.")
+if not instrumentalIsExist:
+    # Create Instrumental folder
+    os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/instrumental")
+    print("Instrumental folder created.")
 if not classicalIsExist:
     # Create classical folder
     os.makedirs("C:/Users/Dominik/PycharmProjects/Neural-Network/data/classical")
@@ -85,8 +113,15 @@ hiphop_tracks_data = tracks_data[tracks_data['label'].isin(['Hip-Hop'])]
 jazz_tracks_data = tracks_data[tracks_data['label'].isin(['Jazz'])]
 pop_tracks_data = tracks_data[tracks_data['label'].isin(['Pop'])]
 
+# Filter for fma small genres
+folk_tracks_data = tracks_data[tracks_data['label'].isin(['Folk'])]
+experimental_tracks_data = tracks_data[tracks_data['label'].isin(['Experimental'])]
+international_tracks_data = tracks_data[tracks_data['label'].isin(['International'])]
+electronic_tracks_data = tracks_data[tracks_data['label'].isin(['Electronic'])]
+instrumental_tracks_data = tracks_data[tracks_data['label'].isin(['Instrumental'])]
+
 # Move Songs from child to root directories
-'''parent_folder = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large"
+'''parent_folder = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small"
 
 child_folders = [folder for folder in os.listdir(parent_folder)     # Get a list of all child folders
                  if os.path.isdir(os.path.join(parent_folder, folder))]
@@ -101,7 +136,8 @@ for folder in child_folders:
 # Delete the child folders
 for folder in child_folders:
     folder_path = os.path.join(parent_folder, folder)
-    shutil.rmtree(folder_path)'''
+    shutil.rmtree(folder_path)
+'''
 
 # Tracks data for Metal, Disco and Reggae
 tracks_data2 = pd.read_csv(tracks_file, header=[0, 1, 2], low_memory=False)
@@ -119,11 +155,23 @@ metal_tracks_data = tracks_data2[tracks_data2['genres'].isin(['[31]', '[101]', '
 reggae_tracks_data = tracks_data2[tracks_data2['genres'].isin(['[79]', '[602]'])]
 disco_tracks_data = tracks_data2[tracks_data2['genres'].isin(['[11]'])]
 
+# Move Metal Songs
+for index, row in metal_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/metal/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists Metal to Metal Folder')
+    except (Exception,):
+        print('File does not Exist')
+
 # Move Blues Songs
 for index, row in blues_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/blues/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -135,7 +183,7 @@ for index, row in blues_tracks_data.iterrows():
 for index, row in classical_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/classical/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -147,7 +195,7 @@ for index, row in classical_tracks_data.iterrows():
 for index, row in country_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/country/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -159,7 +207,7 @@ for index, row in country_tracks_data.iterrows():
 for index, row in disco_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/disco/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -171,7 +219,7 @@ for index, row in disco_tracks_data.iterrows():
 for index, row in hiphop_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/hiphop/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -183,7 +231,7 @@ for index, row in hiphop_tracks_data.iterrows():
 for index, row in jazz_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/jazz/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -191,23 +239,11 @@ for index, row in jazz_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
-# Move Metal Songs
-for index, row in metal_tracks_data.iterrows():
-    track_id = row['track_id']
-    print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
-    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/metal/{track_id}.mp3'
-    try:
-        shutil.move(old_file, new_file)
-        print('File Exists Metal to Metal Folder')
-    except (Exception,):
-        print('File does not Exist')
-
 # Move Rock Songs
 for index, row in rock_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/rock/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -219,7 +255,7 @@ for index, row in rock_tracks_data.iterrows():
 for index, row in pop_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/pop/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
@@ -231,8 +267,68 @@ for index, row in pop_tracks_data.iterrows():
 for index, row in reggae_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
-    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/reggae/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Folk Songs
+for index, row in folk_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/folk/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Experimental Songs
+for index, row in experimental_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/experimental/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move International Songs
+for index, row in international_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/international/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Electronic Songs
+for index, row in electronic_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/electronic/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Instrumental Songs
+for index, row in instrumental_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_small/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/instrumental/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
         print('File Exists')
