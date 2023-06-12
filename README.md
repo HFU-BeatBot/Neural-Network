@@ -71,6 +71,18 @@ This filtering was based on the 'title' column in the "genres_data" DataFrame.
 - In the variable merged_genres, the data from the merged_data and genres_data DataFrames was further filtered to keep only the data for the selected genres. 
 The 'label' column was used for this filtering.
 
+### createFMAsmallData
+- fma_small: 8,000 tracks of 30s, 8 balanced genres (GTZAN-like) (7.2 GiB)
+- Download the dataset from this website: https://os.unil.cloud.switch.ch/fma/fma_small.zip 
+- The 8 involves genres are: electronic, experimental, folk, hiphop, instrumental, international, pop and rock.
+
+This code works with the FMA small dataset. We have this organized into genre folders called "fma_small".
+In the code, we access these genre folders and process individual songs. 
+The processed data is then saved in a CSV file named "fma_small_data.csv" in the directory "data/fma_metadata".
+
+Please note that the FMA small dataset may contain some defective songs. 
+To handle this, the code includes a try-catch block to ignore and skip any problematic songs during processing.
+
 ### Usage
 1. Ensure that you have the required dependencies installed.
 2. Download the dataset and place the necessary files in the "data" directory,for both GTZAN and FMA.
