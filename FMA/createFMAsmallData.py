@@ -1,7 +1,6 @@
 import csv
 import os
 import warnings
-
 import librosa
 import numpy as np
 
@@ -14,7 +13,7 @@ header += ' label'
 header = header.split()
 
 # create the directory for the CSV file
-directory = 'data/fma_metadata/'
+directory = 'data/'
 os.makedirs(directory, exist_ok=True)
 
 # create the file path for the CSV file
@@ -30,12 +29,12 @@ genres = 'electronic experimental folk hiphop instrumental international pop roc
 
 # iterate over each genre
 for g in genres:
-    folder_path = os.path.join(f'fma_small/{g}')
+    folder_path = os.path.join(f'fma_small_wav/{g}')
     filenames = [filename for filename in os.listdir(folder_path) if not filename.startswith('.')]
 
     # iterate over each file in the genre folder
     for filename in filenames:
-        songname = f'./fma_small/{g}/{filename}'
+        songname = f'./fma_small_wav/{g}/{filename}'
 
         try:
             # Load the audio file
