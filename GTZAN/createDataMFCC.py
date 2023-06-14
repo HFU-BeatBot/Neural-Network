@@ -13,11 +13,11 @@ header += ' label'
 header = header.split()
 
 # create the directory for the CSV file
-directory = 'data/gtzan_metadata/'
+directory = 'data/'
 os.makedirs(directory, exist_ok=True)
 
 # create the file path for the CSV file
-file_path = os.path.join(directory, 'data.csv')
+file_path = os.path.join(directory, 'gtzan_data.csv')
 file = open(file_path, 'w', newline='')
 
 with file:
@@ -29,13 +29,13 @@ genres = 'blues classical country disco hiphop jazz metal pop reggae rock'.split
 
 # iterate over each genre
 for g in genres:
-    folder_path = os.path.join(f'genres/{g}')
+    folder_path = os.path.join(f'genres_wav/{g}')
     filenames = [filename for filename in os.listdir(folder_path)
                  if not filename.startswith('.')]
 
     # iterate over each file in the genre folder
     for filename in filenames:
-        songname = f'./genres/{g}/{filename}'
+        songname = f'./genres_wav/{g}/{filename}'
         y, sr = librosa.load(songname, mono=True, duration=3)
         mfcc = librosa.feature.mfcc(y=y, sr=sr)
         to_append = f'{filename}'

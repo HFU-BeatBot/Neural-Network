@@ -16,7 +16,7 @@ from keras import callbacks
 tf.keras.utils.set_random_seed(
     1
 )
-data = pd.read_csv('data/gtzan_metadata/data.csv')
+data = pd.read_csv('data/gtzan_data.csv')
 data.head()
 
 # Dropping unnecessary columns
@@ -31,7 +31,7 @@ print(y)
 # normalizing
 scaler = StandardScaler()
 X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
-dump(scaler, open('../scaler.bin', 'wb'), compress=True)  # save scaler
+dump(scaler, open('gtzan_scaler.bin', 'wb'), compress=True)  # save scaler
 print("Saved scaler to disk as .bin")
 
 # splitting of dataset into train and test dataset
@@ -95,7 +95,7 @@ history_df.loc[0:, ['loss', 'val_loss']].plot()
 plt.xlabel("epochs")
 plt.ylabel("loss")
 plt.title("loss + val_loss")
-plt.savefig('loss_val_loss_with_earlystopping.png')
+plt.savefig('gtzan_loss_val_loss_with_earlystopping.png')
 plt.show()
 
 # predictions
