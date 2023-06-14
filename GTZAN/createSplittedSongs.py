@@ -13,15 +13,15 @@ for i in range(1, 21):
 header += ' label'
 header = header.split()
 
-# Path of the "genres" folder
-genres_folder = 'genres'
+# Path of the "genres_wav" folder
+genres_folder = 'genres_wav'
 
 # List of genres
 genres = 'blues classical country disco hiphop jazz metal pop reggae rock'.split()
 
 # Path to the output folder for the audio segments and the CSV file
 output_folder = 'GTZAN_Splitted_Songs'
-output_csv_file = os.path.join(output_folder, 'SplittedSong.csv')
+output_csv_file = os.path.join(output_folder, 'gtzan_SplittedSong.csv')
 
 # Create the output folder if it doesn't exist
 if not os.path.exists(output_folder):
@@ -48,21 +48,16 @@ for genre in genres:
         for song in songs:
             song_path = os.path.join(genre_folder, song)
 
-            # Convert MP3 to WAV
-            wav_filename = os.path.splitext(song)[0] + '.wav'
-            wav_path = os.path.join(songs_folder, wav_filename)
-            os.system(f'ffmpeg -i "{song_path}" "{wav_path}"')
-
             # Load the WAV file
             data, sample_rate = librosa.load(song_path, sr=None)
 
             total_samples = len(data)
-            snippet_samples = int(snippet_duration * sample_rate)
+            max_snippets = min(int(total_samples / (snippet_duration * sample_rate)), 5)
 
             # Extract the snippets
-            for i in range(int(total_samples / snippet_samples)):
-                start_index = i * snippet_samples
-                end_index = start_index + snippet_samples
+            for i in range(max_snippets):
+                start_index = i * snippet_duration * sample_rate
+                end_index = (i + 1) * snippet_duration * sample_rate
                 snippet = data[start_index:end_index]
 
                 # Extract MFCC features from the snippet
@@ -75,15 +70,16 @@ for genre in genres:
                 scaler = StandardScaler()
                 scaled_features = scaler.fit_transform([mfcc_features])
 
-                for e in mfcc:
-                    wav_filename += f' {np.mean(e)}'
-                    wav_filename += f' {np.std(e)}'
+                snippet_number = i + 1
+                snippet_filename = f'{genre}{snippet_number}.wav'
 
-                wav_filename += f' {genre}'
+                for e in mfcc:
+                    snippet_filename += f' {np.mean(e)}'
+                    snippet_filename += f' {np.std(e)}'
 
                 # Append the song information to the CSV file
                 with open(output_csv_file, 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow(wav_filename.split())
+                    writer.writerow(snippet_filename.split())
 
 print("Snippets were created and saved in the CSV file.")
