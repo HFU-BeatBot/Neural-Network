@@ -37,8 +37,27 @@ The workflow for both models is similar, and the goal is the same - to classify 
 ## Code
 The Python codes are available in both the FMA and GTZAN folders with slight modifications.
 
+### convertSongsToWav.py
+#### FMA small
+We have the FMA small dataset organized into genre folders called "fma_small".
+Then we created a "fma_small_wav" directory to store WAV files, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
+It converts each MP3 file to WAV format, saves it in the genre-specific directory.
+
+#### GTZAN
+In this code we created a "genres_wav" directory to store WAV files, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
+It converts each AU file to WAV format, saves it in the genre-specific directory.
+
 ### createDataMFCC.py:
-This code generates a dataset in the form of a CSV file (data.csv) with MFCC (Mel-frequency Cepstral Coefficients) features extracted from audio files.
+#### FMA small
+This code works with the FMA small dataset, exactly with the converted one "fma_small_wav" directory.
+In the code, we access these genre folders and process individual songs. 
+The processed data is then saved in a CSV file named "fma_small_data.csv" in the directory "data".
+
+Please note that the FMA small dataset may contain some defective songs. 
+To handle this, the code includes a try-catch block to ignore and skip any problematic songs during processing.
+
+#### GTZAN
+This code generates the GTZAN dataset in the form of a CSV file (gtzan_data.csv) with MFCC (Mel-frequency Cepstral Coefficients) features extracted from audio files, which saved in the "genres_wav" directory.
 The CSV file is created in the "data" folder.
 
 ### createModelMFCC.py
@@ -54,17 +73,6 @@ The CSV file is created in the "data" folder.
 In this code, we are loading an audio file named '50 Cent - In Da Club.wav'. 
 The Goal here is to print the genre label from the Song. 
 
-### createSplittedSongs.py
-- Loads audio files from the specified genres folder and creates snippets of 5-second duration.
-- Extracts MFCC features from each snippet and scales the features using a StandardScaler. 
-- Makes predictions using the trained model and saves the snippet paths and predicted genres in a CSV file. 
-
-For the FMA data
-- The resulting CSV file is saved as SplittedSong.csv in the "FMA_Splitted_Songs" folder.
-
-For the GTZAN data
-- The resulting CSV file is saved as SplittedSong.csv in the "GTZAN_Splitted_Songs" folder.
-
 ### filterFMAData.py
 The goal of this code is to filter the Data from the FMA dataset. 
 
@@ -76,18 +84,16 @@ This filtering was based on the 'title' column in the "genres_data" DataFrame.
 - In the variable merged_genres, the data from the merged_data and genres_data DataFrames was further filtered to keep only the data for the selected genres. 
 The 'label' column was used for this filtering.
 
-### convertFMAsmallToWav.py
-We have the FMA small dataset organized into genre folders called "fma_small".
-In this code we created a "fma_small_wav" directory to store WAV files, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
-It converts each MP3 file to WAV format, saves it in the genre-specific directory.
+### createSplittedSongs.py
+- Loads audio files from the specified genres folder and creates snippets of 5-second duration.
+- Extracts MFCC features from each snippet and scales the features using a StandardScaler. 
+- Makes predictions using the trained model and saves the snippet paths and predicted genres in a CSV file. 
 
-### createFMAsmallData.py
-This code works with the FMA small dataset, exactly with the converted one "fma_small_wav" directory.
-In the code, we access these genre folders and process individual songs. 
-The processed data is then saved in a CSV file named "fma_small_data.csv" in the directory "data".
+For the FMA data
+- The resulting CSV file is saved as fma_SplittedSong.csv in the "FMA_Splitted_Songs" folder.
 
-Please note that the FMA small dataset may contain some defective songs. 
-To handle this, the code includes a try-catch block to ignore and skip any problematic songs during processing.
+For the GTZAN data
+- The resulting CSV file is saved as gtzan_SplittedSong.csv in the "GTZAN_Splitted_Songs" folder.
 
 ### Usage
 1. Ensure that you have the required dependencies installed.
