@@ -95,6 +95,20 @@ For the FMA data
 For the GTZAN data
 - The resulting CSV file is saved as gtzan_SplittedSong.csv in the "GTZAN_Splitted_Songs" folder.
 
+### addSongsnoise.py
+This code generates noisy versions of songs. 
+It adds random noise to the original audio and normalizes the resulting audio. 
+The code then saves the noisy songs in a separate folder organized by genre and extracts MFCC (Mel-frequency cepstral coefficients) features from the noisy audio. 
+The extracted MFCC features are saved in a CSV file along with the corresponding song information.
+
+For the FMA data
+- The resulting CSV file is saved as fma_noisy_songs.csv in the "data" folder.
+- The resulting noisy versions songs is saved in the "FMA_Noisy_Songs" folder.
+
+For the GTZAN data
+- The resulting CSV file is saved as gtzan_noisy_songs.csv in the "data" folder.
+- The resulting noisy versions songs is saved in the "GTZAN_Noisy_Songs" folder.
+
 ### Usage
 1. Ensure that you have the required dependencies installed.
 2. Download the dataset and place the necessary files in the "data" directory,for both GTZAN and FMA.
