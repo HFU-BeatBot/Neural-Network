@@ -1,9 +1,9 @@
 import os
 import shutil
-from os.path import join
 import pandas as pd
+from pydub import AudioSegment
 
-# Paths to the file
+# Path to tracks.csv
 tracks_file = 'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv'
 
 # Check if data folders already exist
@@ -239,3 +239,41 @@ for index, row in rock_tracks_data.iterrows():
         print('File Exists')
     except (Exception,):
         print('File does not Exist')
+
+# Specify folder path containing the .mp3 files
+folder_path_blues = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/blues/"
+folder_path_classical = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/classical/"
+folder_path_country = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/country/"
+folder_path_disco = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/disco/"
+folder_path_hiphop = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/hiphop/"
+folder_path_jazz = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/jazz/"
+folder_path_metal = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/metal/"
+folder_path_pop = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/pop/"
+folder_path_reggae = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/reggae/"
+folder_path_rock = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/rock/"
+
+
+def convert_mp3_to_wav(mp3_path, wav_path):
+    audio = AudioSegment.from_mp3(mp3_path)
+    audio.export(wav_path, format="wav")
+
+
+def convert_folder_files(folder):
+    for filename in os.listdir(folder):
+        if filename.endswith(".mp3"):
+            mp3_path = os.path.join(folder, filename)
+            wav_path = os.path.join(folder, os.path.splitext(filename)[0] + ".wav")
+            convert_mp3_to_wav(mp3_path, wav_path)
+
+
+# Convert .mp3 files in the folders to WAV
+convert_folder_files(folder_path_blues)
+convert_folder_files(folder_path_classical)
+convert_folder_files(folder_path_country)
+convert_folder_files(folder_path_disco)
+convert_folder_files(folder_path_hiphop)
+convert_folder_files(folder_path_jazz)
+convert_folder_files(folder_path_metal)
+convert_folder_files(folder_path_pop)
+convert_folder_files(folder_path_reggae)
+convert_folder_files(folder_path_rock)
