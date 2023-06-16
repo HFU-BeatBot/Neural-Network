@@ -100,28 +100,59 @@ print(tracks_data)
 
 # Blues
 blues_tracks_data = tracks_data[tracks_data['genres'].isin(['[3]'])]
+# Additional Disco Tracks
+additional_blues_tracks_data = tracks_data[tracks_data['genres'].str.startswith('[3,')
+                                           & tracks_data['genres'].str.endswith(']')]
 # Classical
 classical_tracks_data = tracks_data[tracks_data['genres'].isin(['[5]'])]
+# Additional Classical Tracks
+additional_classical_tracks_data = tracks_data[tracks_data['genres'].str.startswith('[5,')
+                                               & tracks_data['genres'].str.endswith(']')]
 # Country, Country & Western
 country_tracks_data = tracks_data[tracks_data['genres'].isin(['[9]', '[651]'])]
+# Additional Country Tracks
+additional_country_tracks_data = tracks_data[tracks_data['genres'].str.startswith('[9,')
+                                             & tracks_data['genres'].str.endswith(']')]
 # Disco
 disco_tracks_data = tracks_data[tracks_data['genres'].isin(['[11]'])]
+# Additional Disco Tracks
+additional_disco_tracks_data = tracks_data[tracks_data['genres'].str.startswith('[11,')
+                                           & tracks_data['genres'].str.endswith(']')]
 # Hip-Hop, Alternative Hip-Hop, Abstract Hip-Hop, Hip-Hop Beats
 hipHop_tracks_data = tracks_data[tracks_data['genres'].isin(['[21]', '[100]', '[580]', '[811]'])]
 # Jazz, Jazz: Vocal, Free-Jazz, Jazz: Out, Modern Jazz
 jazz_tracks_data = tracks_data[tracks_data['genres'].isin(['[4]', '[37]', '[74]', '[97]', '[906]'])]
+# Additional Jazz Tracks
+additional_jazz_tracks_data = tracks_data[tracks_data['genres'].str.contains(r'\[4,|\[37,|\[74,|\[97,|\[906,',
+                                                                             regex=True)]
 # Metal, Death-Metal, Black-Metal
 metal_tracks_data = tracks_data[tracks_data['genres'].isin(['[31]', '[101]', '[167]'])]
+# Additional Metal Tracks
+additional_metal_tracks_data = tracks_data[tracks_data['genres'].str.contains(r'\[31,|\[101,|\[167,', regex=True)]
 # Pop, Experimental Pop, Synth-Pop
 pop_tracks_data = tracks_data[tracks_data['genres'].isin(['[10]', '[76]', '[111]', '[362]'])]
 # Reggae - Dub, Reggae - Dancehall
 reggae_tracks_data = tracks_data[tracks_data['genres'].isin(['[79]', '[602]'])]
+# Additional Reggae Tracks
+additional_reggae_tracks_data = tracks_data[tracks_data['genres'].str.contains(r'\[79,|\[602,', regex=True)]
 # Rock, Post-Rock, Krautrock, Loud-Rock, Noise-Rock, Psych-Rock, Indie-Rock, Space-Rock, Rock-Opera
 rock_tracks_data = tracks_data[tracks_data['genres'].isin(['[12]', '[26]', '[36]', '[45]', '[53]', '[58]', '[66]',
                                                            '[113]', '[440]'])]
 
 # Move Blues Songs
 for index, row in blues_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/blues/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Additional Blues Songs
+for index, row in additional_blues_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
     old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
@@ -144,6 +175,18 @@ for index, row in classical_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
+# Move Additional Classical Songs
+for index, row in additional_classical_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/classical/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
 # Move Country Songs
 for index, row in country_tracks_data.iterrows():
     track_id = row['track_id']
@@ -156,8 +199,32 @@ for index, row in country_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
+# Move Additional Country Songs
+for index, row in additional_country_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/country/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
 # Move Disco Songs
 for index, row in disco_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/disco/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Additional Disco Songs
+for index, row in additional_disco_tracks_data.iterrows():
     track_id = row['track_id']
     print(track_id)
     old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
@@ -192,6 +259,18 @@ for index, row in jazz_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
+# Move Additional Jazz Songs
+for index, row in additional_jazz_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/jazz/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
 # Move Metal Songs
 for index, row in metal_tracks_data.iterrows():
     track_id = row['track_id']
@@ -200,7 +279,19 @@ for index, row in metal_tracks_data.iterrows():
     new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/metal/{track_id}.mp3'
     try:
         shutil.move(old_file, new_file)
-        print('File Exists Metal to Metal Folder')
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
+# Move Additional Metal Songs
+for index, row in additional_metal_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/metal/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
     except (Exception,):
         print('File does not Exist')
 
@@ -228,6 +319,18 @@ for index, row in reggae_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
+# Move Additional Reggae Songs
+for index, row in additional_reggae_tracks_data.iterrows():
+    track_id = row['track_id']
+    print(track_id)
+    old_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_large/{track_id}.mp3'
+    new_file = f'C:/Users/Dominik/PycharmProjects/Neural-Network/data/reggae/{track_id}.mp3'
+    try:
+        shutil.move(old_file, new_file)
+        print('File Exists')
+    except (Exception,):
+        print('File does not Exist')
+
 # Move Rock Songs
 for index, row in rock_tracks_data.iterrows():
     track_id = row['track_id']
@@ -239,6 +342,9 @@ for index, row in rock_tracks_data.iterrows():
         print('File Exists')
     except (Exception,):
         print('File does not Exist')
+
+'''
+# .mp3 to .wav conversion (pip install ffmpeg-downloader) & (ffdl install --add-path) required
 
 # Specify folder path containing the .mp3 files
 folder_path_blues = "C:/Users/Dominik/PycharmProjects/Neural-Network/data/blues/"
@@ -277,3 +383,4 @@ convert_folder_files(folder_path_metal)
 convert_folder_files(folder_path_pop)
 convert_folder_files(folder_path_reggae)
 convert_folder_files(folder_path_rock)
+'''
