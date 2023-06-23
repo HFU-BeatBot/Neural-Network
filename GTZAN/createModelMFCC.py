@@ -16,7 +16,7 @@ from keras import callbacks
 tf.keras.utils.set_random_seed(
     1
 )
-data = pd.read_csv('data/gtzan_data.csv')
+data = pd.read_csv('data/data.csv')
 data.head()
 
 # Dropping unnecessary columns
