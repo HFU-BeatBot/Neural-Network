@@ -111,20 +111,18 @@ For the GTZAN data
 
 ### FMALargeSortGTZANGenres.py
 This file is used to automatically assign the songs from the FMA_large (https://os.unil.cloud.switch.ch/fma/fma_large.zip 93GB) data to the GTZAN genre folders.
-It automatically creates the GTZAN genre folders at given location and moves the songs that fit the GTZAN genres into the folders.
+It automatically creates the GTZAN  (blues, classical, country, disco, hiphop, jazz, metal, pop, reggae and rock) 
+folders at given location and moves the songs that fit the GTZAN genres into the folders.
 
-To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') with your own Username.
-
-Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
-and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_large/).
+To use this file place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at (/FMA/data/fma_metadata/tracks.csv) 
+and the mp3 files at (/FMA/data/fma_small/).
 
 ### FMASmallSortMP3.py
 This file, much like FMALargeGTZANGenres.py, is used to assign the songs from FMA_small (https://os.unil.cloud.switch.ch/fma/fma_small.zip 8GB) data
 to genre folders, this time the 8 genres specified in fma_small (electronic, experimental, folk, hiphop, instrumental, international, pop and rock).
 
-To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') with your own Username.
-Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
-and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_small/).
+To use this file place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at (/FMA/data/fma_metadata/tracks.csv) 
+and the mp3 files at (/FMA/data/fma_small/).
 
 ### getMfccStdAndMeanOfASong.py
 This file is used to get the std and mean MFCC values of a single Song.
