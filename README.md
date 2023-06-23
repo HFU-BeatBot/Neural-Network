@@ -6,114 +6,213 @@ The neural-network which decides what genre the given song belongs to.
 ```
 pip install -r requirements.txt
 ```
-
-## Introduction
+### Nahed:
+___
+# Introduction
 This project focuses on music genre classification using neural networks.
 
-It involves two models: one trained on the GTZAN dataset and another trained on the FMA dataset.
-The workflow for both models is similar, and the goal is the same - to classify music genres.
+It involves two models: 
+1.	GTZAN model: This one is trained on the GTZAN dataset.
+2.	FMA model: This one is trained on the FMA dataset.
 
-## Datasets
-### GTZAN Dataset
-- A collection of 10 genres with 100 audio files each, all having a length of 30 seconds
+The workflow for both models is similar, and the goal is the same - to classify music genres.
+___
+# GTZAN
+## Dataset
+- A collection of 10 balanced genres with 100 audio files each, all having a length of 30 seconds in au format (1GiB)
 - 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae and rock
 - Download the GTZAN Dataset from this site: [GTZAN](https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification)
 
-### FMA (Free Music Archive) Dataset
-- A collection of 10 genres with more than 100 audio files each, all having a length of 30 seconds
-- 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae and rock
-- All metadata and features for all tracks are distributed in fma_metadata.zip (342 MiB).
-- Download this Data-Package from this link directly: [FMA Webpage](https://os.unil.cloud.switch.ch/fma/fma_metadata.zip) or visit this site: [FMA Github](https://github.com/mdeff/fma)
-
-- tracks.csv: per track metadata such as ID, title, artist, genres, tags and play counts, for all 106,574 tracks.
-- genres.csv: all 163 genres with name and parent (used to infer the genre hierarchy and top-level genres).
-- features.csv: common features extracted with librosa. 
-
-##### FMA small:
-- fma_small: 8,000 tracks of 30s, 8 balanced genres (GTZAN-like) (7.2 GiB)
-- Download the dataset from this website: [FMA Small](https://os.unil.cloud.switch.ch/fma/fma_small.zip)
-- The 8 involved genres are: electronic, experimental, folk, hiphop, instrumental, international, pop and rock.
-
-##### FMA large:
-- fma_large: 106,574 tracks of 30s, 161 unbalanced genres (93 GiB)
-- Download the dataset from this website: [FMA Large](https://os.unil.cloud.switch.ch/fma/fma_large.zip)
-- The 16 main genres are: electronic, experimental, folk, hiphop, instrumental, international, pop, rock, jazz, classical,
-  country, spoken, blues, soul/rnb, old-time/histroic and easy listening
-
 ## Code
-The Python codes are available in both the FMA and GTZAN folders with slight modifications.
+After downloading and unzipping the dataset, which is located in the folder called genres. Now you can transfer that into the required IDE (PyCharm). 
 
-### convertSongsToWav.py
-#### FMA small
-We have the FMA small dataset organized into genre folders called "fma_small".
-Then we created a "fma_small_wav" directory to store WAV files, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
-It converts each MP3 file to WAV format, saves it in the genre-specific directory.
-
-#### GTZAN
-In this code we created a "genres_wav" directory to store WAV files, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
+### 1. convertSongsToWav.py
+This code creates a 'genres_wav' directory to store WAV files. For each genre in the given list, the code iterates over the corresponding genre folder. 
 It converts each AU file to WAV format, saves it in the genre-specific directory.
 
-### createDataMFCC.py:
-#### FMA small
-This code works with the FMA small dataset, exactly with the converted one "fma_small_wav" directory.
-In the code, we access these genre folders and process individual songs. 
-The processed data is then saved in a CSV file named "fma_small_data.csv" in the directory "data".
+→ The resulting directory is saved as 'genres_wav'
 
-Please note that the FMA small dataset may contain some defective songs. 
-To handle this, the code includes a try-catch block to ignore and skip any problematic songs during processing.
+### 2.	createDataMFCC.py
+This code generates the GTZAN dataset in the form of a CSV file ' gtzan_data.csv ' with MFCC (Mel-frequency Cepstral Coefficients) features extracted from audio files, which saved in the 'genres_wav' directory.
 
-#### GTZAN
-This code generates the GTZAN dataset in the form of a CSV file (gtzan_data.csv) with MFCC (Mel-frequency Cepstral Coefficients) features extracted from audio files, which saved in the "genres_wav" directory.
-The CSV file is created in the "data" folder.
+→ The resulting file is saved as 'gtzan_data.csv' in the directory 'data'
 
-### createModelMFCC.py
-- Defines the architecture of a neural network model for genre classification.
-- Performs training of the model, evaluation of its performance, prediction on test data, and saving the trained model. 
-- Generates visualizations to illustrate the training process and model performance. 
-- The neural network model consists of multiple dense layers with ReLU activation functions. 
-- Dropout layers are included to prevent overfitting. 
-- The output layer uses softmax activation for multi-class classification. 
-- The trained model is saved as model.h5, and visualizations are saved as .png and .bin files.
+In steps 3 and 4, we apply two important procedures to the GTZAN data:
+- adding individual noise and 
+- creating 5-second snippets
+These codes contribute to the overall structure and understanding. 
 
-### createSongModelMFCC.py
-In this code, we are loading an audio file named '50 Cent - In Da Club.wav'. 
-The Goal here is to print the genre label from the Song. 
+However, in steps 5 and 6, we combine steps 3 and 4 into a single code. This code allows us to process the data more efficiently and save the results in a single CSV file. This approach enhances our workflow and simplifies further work with the data. 
 
-### filterFMAData.py
-The goal of this code is to filter the Data from the FMA dataset. 
+### 3.	createSplittedSongs.py
+This code loads audio files from the specified genres folder and creates 5-second snippets. It extracts MFCC features from each snippet using the librosa library and scales the features using a StandardScaler. The extracted features, along with the corresponding genre information, are then saved in a CSV file.
 
-- In the variable filtered_tracks_data, the tracks were filtered to keep only those belonging to the selected genres. 
-The selected genres are: 'Blues', 'Classical', 'Country', 'Disco', 'Hip-Hop', 'Jazz', 'Metal', 'Pop', 'Reggae - Dub', and 'Rock'. 
-This filtering was based on the 'label' column in the "tracks_data" DataFrame.
-- In the variable genres_data, the genres were filtered to keep only those genres that belong to the selected genres. 
-This filtering was based on the 'title' column in the "genres_data" DataFrame.
-- In the variable merged_genres, the data from the merged_data and genres_data DataFrames was further filtered to keep only the data for the selected genres. 
-The 'label' column was used for this filtering.
+→ The resulting file is saved as 'gtzan_SplittedSong.csv' in the directory 'GTZAN_Splitted_Songs'
 
-### createSplittedSongs.py
-- Loads audio files from the specified genres folder and creates snippets of 5-second duration.
-- Extracts MFCC features from each snippet and scales the features using a StandardScaler. 
-- Makes predictions using the trained model and saves the snippet paths and predicted genres in a CSV file. 
-
-For the FMA data
-- The resulting CSV file is saved as fma_SplittedSong.csv in the "FMA_Splitted_Songs" folder.
-
-For the GTZAN data
-- The resulting CSV file is saved as gtzan_SplittedSong.csv in the "GTZAN_Splitted_Songs" folder.
-
-### addSongsnoise.py
+### 4.	addSongsnoise.py
 This code generates noisy versions of songs. 
 It adds random noise to the original audio and normalizes the resulting audio. 
 The code then saves the noisy songs in a separate folder organized by genre and extracts MFCC (Mel-frequency cepstral coefficients) features from the noisy audio. 
 The extracted MFCC features are saved in a CSV file along with the corresponding song information.
 
-For the FMA data
-- The resulting CSV file is saved as fma_noisy_songs.csv in the "data" folder.
-- The resulting noisy versions songs is saved in the "FMA_Noisy_Songs" folder.
+→ The resulting file is saved as 'gtzan_noisy_songs.csv' in the directory 'data' 
 
-For the GTZAN data
-- The resulting CSV file is saved as gtzan_noisy_songs.csv in the "data" folder.
-- The resulting noisy versions songs is saved in the "GTZAN_Noisy_Songs" folder.
+→ The resulting noisy versions songs is saved in the directory 'GTZAN_Noisy_Songs'
+
+### 5. addNoise.py
+This file defines a function addNoise() that takes a signal, sample rate, and optional parameters for the noise type and file format. It adds Gaussian noise to the input signal using the AddGaussianNoise function from the augment library. The augmented signal is then saved as a WAV file.
+
+### 6. makeCSV.py
+This file imports necessary libraries and defines two functions: generateArrayOfMeanAndSTD() and makeCSV().
+
+-	generateArrayOfMeanAndSTD() 
+takes a song file, its filename, and genre as input. It loads the song using librosa, extracts MFCC features, calculates the mean and standard deviation of each feature, and returns a formatted string containing the filename, MFCC mean and standard deviation values, and genre.
+-	makeCSV() 
+This is the main function that generates a CSV file. It prepares the header row with column names for the filename, MFCC mean and standard deviation values, and label. It iterates through the WAV files in the specified genres folder, checks the length of each song, splits it into parts if it is longer than the specified duration, generates the MFCC features and labels for each part, and appends the data to the CSV file. It also adds Gaussian noise to the parts and appends the augmented data to the CSV file. The resulting CSV file contains the extracted features and labels for further analysis.
+
+→ The resulting file is saved as 'data.csv' in the directory 'data'
+To use the code, simply call makeCSV() function, and the CSV file will be generated with the extracted features and labels.
+ 
+### 7. createModelMFCC.py
+The model defines the architecture of a neural network model for genre classification.
+It has been trained using the data stored in the 'data.csv' file, which contains the noisy and split values generated using the makeCSV.py code. 
+The model achieved a training accuracy of 99% and a test accuracy of 93%. 
+ 
+The model does the following:
+-	It performs training of the model, evaluation of its performance, prediction on test data, and saving the trained model. 
+-	It generates visualizations to illustrate the training process and model performance. 
+-	The neural network model consists of multiple dense layers with ReLU activation functions. 
+-	Dropout layers are included to prevent overfitting. 
+-	The output layer uses softmax activation for multi-class classification. 
+
+→ The resulting files are:
+
+- the trained model is saved as 'gtzan_model.h5',
+- scaler as 'gtzan_scaler.bin' and
+- the visualizations is saved as 'gtzan_loss_val_loss_with_earlystopping.png'.
+
+### 8. createSongModelMFCC.py
+In this code, we are loading an audio file named '50 Cent - In Da Club.wav'. 
+The Goal here is to print the genre label from the Song. 
+
+→ The resulting output will be a number from 0 to 9, representing the detected genre from the list 'blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, rock'  
+
+___
+# FMA (Free Music Archive)
+## FMA Dataset
+- All metadata and features for all tracks are distributed in fma_metadata.zip (342 MiB).
+- Download this Data-Package from this link directly [FMA Webpage](https://os.unil.cloud.switch.ch/fma/fma_metadata.zip)
+
+The needed files from the fma_metadata folder:
+- tracks.csv: per track metadata such as ID, title, artist, genres, tags and play counts, for all 106,574 tracks.
+- genres.csv: all 163 genres with name and parent (used to infer the genre hierarchy and top-level genres).
+- features.csv: common features extracted with librosa. 
+
+## FMA small Dataset
+The model here is trained with the FMA small dataset:  
+- A collection of 8 balanced genres with 1000 audio files each, all having a length of 30 seconds in mp3 format (7.2 GiB)
+- 8 genres: electronic, experimental, folk, hiphop, instrumental, international, pop and rock
+- Download the FMA small dataset from this website: [FMA small](https://os.unil.cloud.switch.ch/fma/fma_small.zip) 
+
+## FMA large Dataset (Dominik)
+- fma_large: 106,574 tracks of 30s, 161 unbalanced genres (93 GiB)
+- Download the dataset from this website: [FMA Large](https://os.unil.cloud.switch.ch/fma/fma_large.zip)
+- The 16 main genres are: electronic, experimental, folk, hiphop, instrumental, international, pop, rock, jazz, classical, country, spoken, blues, soul/rnb, old-time/histroic and easy listening
+
+# Code
+### 1. FMASmallSortMP3.py (Dominik)
+This file, much like FMALargeGTZANGenres.py, is used to assign the songs from FMA_small (https://os.unil.cloud.switch.ch/fma/fma_small.zip 8GB) data to genre folders, this time the 8 genres specified in fma_small (electronic, experimental, folk, hiphop, instrumental, international, pop and rock).
+To use this file place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at (/FMA/data/fma_metadata/tracks.csv) and the mp3 files at (/FMA/data/fma_small/)
+
+→ The resulting directory is 'fma_small'
+
+### 2. convertSongsToWav.py
+Here we created a 'fma_small_wav' directory to store WAV files from the 'fma_small' directory, and then for each genre in the given list, the code iterates over the corresponding genre folder. 
+It converts each MP3 file to WAV format, saves it in the genre-specific directory.
+
+→ The resulting directory is 'fma_small_wav'
+
+
+### 3. createDataMFCC.py:
+This code works with the FMA small dataset, exactly with the converted one "fma_small_wav" directory.
+In the code, we access these genre folders and process individual songs. 
+
+→ The resulting file saved as 'fma_small_data.csv' in the directory 'data'.
+
+Please note that the FMA small dataset may contain some defective songs. 
+To handle this, the code includes a try-catch block to ignore and skip any problematic songs during processing.
+
+In steps 4 and 5, we apply two important procedures to the FMA data:
+- adding individual noise and 
+- creating 5-second snippets
+These codes contribute to the overall structure and understanding. 
+
+However, in steps 6 and 7, we combine steps 4 and 5 into a single code. This code allows us to process the data more efficiently and save the results in a single CSV file. This approach enhances our workflow and simplifies further work with the data.
+
+### 4. addSongsnoise.py
+This code generates noisy versions of songs. 
+It adds random noise to the original audio and normalizes the resulting audio. 
+The code then saves the noisy songs in a separate folder organized by genre and extracts MFCC (Mel-frequency cepstral coefficients) features from the noisy audio. 
+The extracted MFCC features are saved in a CSV file along with the corresponding song information.
+
+→ The resulting CSV file is saved as 'fma_noisy_songs.csv' in the directory 'data' 
+
+→ The resulting noisy versions songs is saved in the 'FMA_Noisy_Songs'
+
+### 5. createSplittedSongs.py
+This code generates noisy versions of songs. 
+It adds random noise to the original audio and normalizes the resulting audio. 
+The code then saves the noisy songs in a separate folder organized by genre and extracts MFCC (Mel-frequency cepstral coefficients) features from the noisy audio. 
+The extracted MFCC features are saved in a CSV file along with the corresponding song information.
+
+→ The resulting file is saved as 'fma_SplittedSong.csv' in the directory 'FMA_Splitted_Songs' 
+
+### 6. addNoise.py
+This file defines a function addNoise() that takes a signal, sample rate, and optional parameters for the noise type and file format. It adds Gaussian noise to the input signal using the AddGaussianNoise function from the augment library. The augmented signal is then saved as a WAV file.
+
+### 7. makeCSV.py
+This file imports necessary libraries and defines two functions: generateArrayOfMeanAndSTD() and makeCSV().
+
+-	generateArrayOfMeanAndSTD() 
+takes a song file, its filename, and genre as input. It loads the song using librosa, extracts MFCC features, calculates the mean and standard deviation of each feature, and returns a formatted string containing the filename, MFCC mean and standard deviation values, and genre.
+-	makeCSV() 
+This is the main function that generates a CSV file. It prepares the header row with column names for the filename, MFCC mean and standard deviation values, and label. It iterates through the WAV files in the specified genres folder, checks the length of each song, splits it into parts if it is longer than the specified duration, generates the MFCC features and labels for each part, and appends the data to the CSV file. It also adds Gaussian noise to the parts and appends the augmented data to the CSV file. The resulting CSV file contains the extracted features and labels for further analysis.
+
+→ The resulting file is saved as 'data.csv' in the directory 'data'
+To use the code, simply call makeCSV() function, and the CSV file will be generated with the extracted features and labels.
+
+### 8. createModelMFCC.py
+The model defines the architecture of a neural network model for genre classification.
+It has been trained using the data stored in the 'data.csv' file, which contains the noisy and split values generated using the makeCSV.py code. 
+The model achieved a training accuracy of 82% and a test accuracy of 72%. 
+ 
+The model does the following:
+-	It performs training of the model, evaluation of its performance, prediction on test data, and saving the trained model. 
+-	It generates visualizations to illustrate the training process and model performance. 
+-	The neural network model consists of multiple dense layers with ReLU activation functions. 
+-	Dropout layers are included to prevent overfitting. 
+-	The output layer uses softmax activation for multi-class classification. 
+
+→ The resulting files are:
+- the trained model is saved as 'gtzan_model.h5',
+- the scaler as 'gtzan_scaler.bin' and
+- the visualizations is saved as 'gtzan_loss_val_loss_with_earlystopping.png'.
+
+### 9. createSongModelMFCC.py
+In this code, we are loading an audio file named '50 Cent - In Da Club.wav'. 
+The Goal here is to print the genre label from the Song. 
+
+→ The resulting output will be a number from 0 to 7, representing the detected genre from the list 'electronic, experimental, folk, hiphop, instrumental, international, pop, rock'
+
+### Usage
+1. Ensure that you have the required dependencies installed.
+2. Download the dataset and ensure that the required files are placed in the desired directory for both GTZAN and FMA.
+3. Follow the provided steps to familiarize yourself with the workflow.
+4. Run the code to train the model and evaluate its accuracy on the test dataset.
+5. The trained model will be saved as ".h5" Format for future use.
+
+### Dominik:
+___
 
 ### FMALargeSortGTZANGenres.py
 This file is used to automatically assign the songs from the FMA_large (https://os.unil.cloud.switch.ch/fma/fma_large.zip 93GB) data to the GTZAN genre folders.
@@ -123,23 +222,11 @@ folders at given location and moves the songs that fit the GTZAN genres into the
 To use this file place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at (/FMA/data/fma_metadata/tracks.csv) 
 and the mp3 files at (/FMA/data/fma_small/).
 
-### FMASmallSortMP3.py
-This file, much like FMALargeGTZANGenres.py, is used to assign the songs from FMA_small (https://os.unil.cloud.switch.ch/fma/fma_small.zip 8GB) data
-to genre folders, this time the 8 genres specified in fma_small (electronic, experimental, folk, hiphop, instrumental, international, pop and rock).
-
-To use this file place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at (/FMA/data/fma_metadata/tracks.csv) 
-and the mp3 files at (/FMA/data/fma_small/).
-
 ### getMfccStdAndMeanOfASong.py
 This file is used to get the std and mean MFCC values of a single Song.
 To use it you have to replace the file path (file_path = 'STUCK ON YOU (reggae)-first5sec.wav') with the file path to the Song you
 want the MFCC values of.
 
-### Usage
-1. Ensure that you have the required dependencies installed.
-2. Download the dataset and place the necessary files in the "data" directory,for both GTZAN and FMA.
-3. Run the code to train the model and evaluate its accuracy on the test dataset.
-4. The trained model will be saved as ".h5" Format for future use.
 
 ### TOM:
 ___
