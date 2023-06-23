@@ -3,6 +3,11 @@ import shutil
 import pandas as pd
 from pydub import AudioSegment
 
+# Get file path of this file
+path_to_folder = os.path.dirname(os.path.abspath(__file__))
+print(path_to_folder)
+
+'''
 # Path to tracks.csv
 tracks_file = 'C:/Users/Dominik/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv'
 
@@ -382,3 +387,4 @@ convert_folder_files(folder_path_metal)
 convert_folder_files(folder_path_pop)
 convert_folder_files(folder_path_reggae)
 convert_folder_files(folder_path_rock)
+'''
