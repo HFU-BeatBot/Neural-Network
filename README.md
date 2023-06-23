@@ -118,13 +118,18 @@ To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neu
 Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
 and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_large/).
 
-### FMASortMP3
+### FMASmallSortMP3.py
 This file, much like FMALargeGTZANGenres.py, is used to assign the songs from FMA_small (https://os.unil.cloud.switch.ch/fma/fma_small.zip 8GB) data
 to genre folders, this time the 8 genres specified in fma_small (electronic, experimental, folk, hiphop, instrumental, international, pop and rock).
 
 To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') with your own Username.
 Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
 and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_small/).
+
+### getMfccStdAndMeanOfASong.py
+This file is used to get the std and mean MFCC values of a single Song.
+To use it you have to replace the file path (file_path = 'STUCK ON YOU (reggae)-first5sec.wav') with the file path to the Song you
+want the MFCC values of.
 
 ### Usage
 1. Ensure that you have the required dependencies installed.
