@@ -17,13 +17,13 @@ The workflow for both models is similar, and the goal is the same - to classify 
 ### GTZAN Dataset
 - A collection of 10 genres with 100 audio files each, all having a length of 30 seconds
 - 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae and rock
-- Download the GTZAN Dataset from this site: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification
+- Download the GTZAN Dataset from this site: [GTZAN](https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification)
 
 ### FMA (Free Music Archive) Dataset
 - A collection of 10 genres with more than 100 audio files each, all having a length of 30 seconds
 - 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae and rock
 - All metadata and features for all tracks are distributed in fma_metadata.zip (342 MiB).
-- Download this Data-Package from this link directly: https://os.unil.cloud.switch.ch/fma/fma_metadata.zip or visit this site: https://github.com/mdeff/fma
+- Download this Data-Package from this link directly: [FMA Webpage](https://os.unil.cloud.switch.ch/fma/fma_metadata.zip) or visit this site: [FMA Github](https://github.com/mdeff/fma)
 
 - tracks.csv: per track metadata such as ID, title, artist, genres, tags and play counts, for all 106,574 tracks.
 - genres.csv: all 163 genres with name and parent (used to infer the genre hierarchy and top-level genres).
@@ -31,7 +31,7 @@ The workflow for both models is similar, and the goal is the same - to classify 
 
 ##### FMA small:
 - fma_small: 8,000 tracks of 30s, 8 balanced genres (GTZAN-like) (7.2 GiB)
-- Download the dataset from this website: https://os.unil.cloud.switch.ch/fma/fma_small.zip 
+- Download the dataset from this website: [FMA Small](https://os.unil.cloud.switch.ch/fma/fma_small.zip)
 - The 8 involves genres are: electronic, experimental, folk, hiphop, instrumental, international, pop and rock.
 
 ## Code

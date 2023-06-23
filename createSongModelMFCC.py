@@ -21,16 +21,18 @@ song = 'Bob Marley & The Wailers - Buffalo Soldier (Official Music Video).mp3'
 FullAudio = AudioSegment.from_mp3(song)             #falls WAV Datei dann .from_wav()
 lengthOfAudio = FullAudio.duration_seconds
 y, sr = librosa.load(song, mono=True, duration=lengthOfAudio)
-chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
-rmse = librosa.feature.rms(y=y)
-spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
-spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
-rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
-zcr = librosa.feature.zero_crossing_rate(y)
+#chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+#rmse = librosa.feature.rms(y=y)
+#spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
+#spec_bw = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+#rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+#zcr = librosa.feature.zero_crossing_rate(y)
 mfcc = librosa.feature.mfcc(y=y, sr=sr)
-songToArray = [np.mean(chroma_stft), np.mean(rmse), np.mean(spec_cent), np.mean(spec_bw), np.mean(rolloff), np.mean(zcr)]
+#songToArray = [np.mean(chroma_stft), np.mean(rmse), np.mean(spec_cent), np.mean(spec_bw), np.mean(rolloff), np.mean(zcr)]
+songToArray= []
 for e in mfcc:
     songToArray.append(np.mean(e))
+    songToArray.append(np.std(e))
 
 numpySongArray = np.array([songToArray])
 numpySongArray = scaler.transform(numpySongArray)
