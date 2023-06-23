@@ -20,7 +20,7 @@ def generateArrayOfMeanAndSTD(song, filename, genre):
     to_append += f' {genre}'
     return to_append
 
-def makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiphop jazz metal pop reggae rock'):
+def makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiphop jazz metal pop reggae rock', path = 'fma_small'):
     #Preparing for the CSV file:
     #Preparing the header row as an array. First the filename than the mfcc values (mean and std) from 1 to 20
     header = 'filename'
@@ -39,10 +39,10 @@ def makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiph
     #going through all wav files
     genres = genresOfLibrary.split()
     for g in genres:
-        filenamewhohidden = (filename for filename in os.listdir(f'./genres/{g}') if not filename.startswith('.'))
+        filenamewhohidden = (filename for filename in os.listdir(f'./{path}/{g}') if not filename.startswith('.'))
         for filename in filenamewhohidden:
             #preparing variables
-            songname = f'./genres/{g}/{filename}'
+            songname = f'./{path}/{g}/{filename}'
             FullAudio = AudioSegment.from_wav(songname)
             lengthOfAudio = FullAudio.duration_seconds
 
