@@ -135,5 +135,194 @@ want the MFCC values of.
 3. Run the code to train the model and evaluate its accuracy on the test dataset.
 4. The trained model will be saved as ".h5" Format for future use.
 
+### TOM:
+___
+# Instruction
+## Step by Step
+
+For your understanding it needs several steps to create this neuronal network.
+Below you will find an instruction which shows you to use fiber.
+
+1.  Get a library of sample song for each genre.
+2.  Clone repository
+2.  Create mfcc values out of the sample-songs and fill them into a CSV-File.
+3. To optimize the model, the values are getting splitted into 5 seconds parts. 
+4. To optimize the model, the values are getting white noise (gaussian). 
+5. Create a model (neuronal network) out of the CSV-File. Save the model and scaler.
+-   To specify a song with the model you need to do:
+6. Create the mfcc values of the song and load it into a numpy array.
+7. Use the scaler of the model on that numpy array.
+8. Use the model on that numpy array.
+-   You will now return a nummer from 0 - 9. Each number stands for genre.
+
+### Genres
+
+Those genres can be specified by the model:
+0. blues
+1. classical
+2. country
+3. disco
+4. hiphop
+5. jazz
+6. metal
+7. pop
+8. reggae
+9. rock
+___
+## 1. Sample-Song Library
+
+This was our first sample-song library:
+
+[GTZAN](https://www.kaggle.com/datasets/carlthome/gtzan-genre-collection)
+
+There are 100 songs of 30 seconds length, for each genre. That is a great base 
+to start with but, we only could achieve an accuracy of 87%. This was for us 
+not enough, so we looked for more sample-songs.
+
+This is our second-song library:
+
+[FMA](https://github.com/mdeff/fma)
+
+There are more than 100 000 sample songs. Which are not by default in a folder
+of their genre. So it needs to specified in which genre the songs are. The only
+link between them are csv-files which combined has to be combined.
+
+___
+## Usage
+Follow those steps to use fiber:
+1. Clone the repository. As for the IDE, we recommend you to use Jetbeans Pycharm.
+```
+git clone https://github.com/HFU-BeatBot/Neural-Network.git
+```
+2. Create a folder with the name 'genres' and in this folder creates 10 folder 
+with the genrenames. Take care that you use the exact same names as it stands above (without the numbering). 
+Fill in them folders the sample songs of GTZAN or from your own source.
+But if you use the FMA files you need to do...
+3. We don't need the complete audio file, we just need the mfcc values of those files. To do that we need to create the CSV-File with the MFCC Values of the sample songs by using this below. This will create by default 5 seconds part of your sample songs and additional create mfcc values with white noise (gaussian) on it and save as 'data.csv' in this directory. If you wish another length you can adjust the seconds of parts in the brackets. 
+```
+from makeCSV import makeCSV
+
+makeCSV()
+```
+4. With the CSV-file we can create now the model with the makeModel() method. Type the pathname of the CSV-File into the brackets, the standard path is "/data.csv".  
+```
+from makeCSV import makeCSV
+
+makeModel("pathnameOfCSV")
+```
+5. The model and scaler is saved in same directory as the makeModel.py.
+6. To specify a song we use the classifySongOnModel(song, model, scaler) function. In which you type the songpath of your wished song, the path of the model.h and the patch of the scaler.bin. This will then return a number which represent one of the genres.
+```
+from classifySongOnModel import classifySongOnModel
+
+classifySongOnModel("pathnameOfSong", "pathnameOfModel", "pathnameOfScaler")
+```
+
+## makeCSV.py
+This makes a data.csv file out of a library of songs which are sorted in genres folder. It splits the songs into
+parts. From that part it takes the std and mean MFCC values and put into 
+a csv-file (data.csv). However, it further creates a noisy version of that part 
+calculate the std and mean MFCC values and put them into the csv-file as well.
+The first value "partLength" declares of the length of the parts which it creates out of the sample song.
+The second value "genresOfLibrary" are the folder names of the library.
+The third value is the path of the library of sample songs
+```
+from makeCSV import makeCSV
+
+makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiphop jazz metal pop reggae rock', path = 'genres');
+```
+## makeModel.py
+This is creating the model out of the csv-file. Which will be saved as "model.h5" and the scaler will
+be saved as "scaler.bin" in the same directory as of the makeModel.py file. The parameter of that
+model achieves the best accuracy of the GTZAN Library.
+The only value that it takes is the path of the csv-file.
+```
+from makeModel import makeModel
+
+makeModel(csvFilePath = 'data.csv')
+```
+## classifySongOnModel.py
+This file is used to classify a genre of song. It creates the MFCC std and mean values out of 
+the given song and put them into a numpy array. This numpy array of data is then taken by the model and
+it predicts the genre. It returns an Integer which represent as a genre of the library.
+The first value is the path of the songfile.
+The second value is the path of the model.h5
+The third value is the path of the scaler.bin
+```
+from classifySongOnModel import classifySongOnModel
+
+classifySongOnModel("Cascada_-_Everytime_We_Touch_Official_Video.mp3", "model.h", "scaler.bin");
+```
+
+## Create CSV 
+To change the length of the audio files, just fill the duration in seconds into the brackets.
+```
+from makeCSV import makeCSV
+
+makeCSV(3);
+```
+___
+## main()
+A full example is shown in the main.py
+```
+from classifySongOnModel import classifySongOnModel
+from makeCSV import makeCSV
+from makeModel import makeModel
+
+
+makeCSV();
+makeModel();
+t= classifySongOnModel("Cascada_-_Everytime_We_Touch_Official_Video.mp3", "model.h", "scaler.bin");
+
+print(t)
+```
+
+# Archive
+In the archive are files which were needed but ain't finding any use now because they become obsolete through other files.
+Those files are still usefull for special tasks.
+
+### createModelFunction.py
+This was the first attempt to make use gridSearcher on the neuronal network model.
+By defining the parameters of the gridSearcher function it tries every possible model with
+those parameter. In the end it shows in the console the parameter with the highest
+accuracy.
+
+### createNoiseDataMFCC.py
+This function had the purpose of creating a data.csv file out songs in genres folder.
+It creates just the std and mean MFCC values and saves them in the data.csv. 
+Additionally it creates a noisy song out of it and saves that MFCC values into
+the data.csv as well.
+
+### createSongModel.py
+In order that the model can predict a genre, it needs a song. This file creates
+all the MFCC values out of a given song and saves it into an appropriate numpy array.
+The model then predicts the genre by that array.
+
+### createSongModelMFCC.py
+This creates only the MFCC std and MFCC mean values of a given song. Those values
+are saved to a numpy array, which then takes the model to predict the genre.
+
+### createSplittedSongModel.py
+This file splits the song in 5 seconds parts and saves them one at a time temporarly in the
+folder "cache". The next 5 seconds part overwrite the predecessor. It then creates all MFCC values and write them into an array of numpyArrays. 
+In the end, it predicts the genre of all 5 second parts and write the result into
+the console
+
+### equalizeGenreSongs.py
+In order to make a good model the library of songs has to be balanced. This file
+takes a filled csv-file and creates a new csv-file with a certain maximum number of entries of all genres.
+
+### fiber.py
+The original model on which are the most files are based on. This file creates the data.csv and the model together.
+It ain't has great accuracy that is the reason why we modified it.
+The original code: [Classification of Music into different Genres using Keras](https://medium.com/@sdoshi579/classification-of-music-into-different-genres-using-keras-82ab5339efe0)
+
+### sampleTo3SecPartsMaker.py
+This file creates 3 seconds parts out of the library songs and saves them in to
+the same directory as the original.
+
+### splitSongto5Sec.py
+
+<<< Dominik >>>
 
 # TO BE CONTINUED

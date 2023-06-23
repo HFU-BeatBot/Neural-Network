@@ -20,7 +20,7 @@ def generateArrayOfMeanAndSTD(song, filename, genre):
     to_append += f' {genre}'
     return to_append
 
-def makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiphop jazz metal pop reggae rock', path = 'fma_small'):
+def makeCSV(partLength = 5, genresOfLibrary ='blues classical country disco hiphop jazz metal pop reggae rock', path = 'genres'):
     #Preparing for the CSV file:
     #Preparing the header row as an array. First the filename than the mfcc values (mean and std) from 1 to 20
     header = 'filename'

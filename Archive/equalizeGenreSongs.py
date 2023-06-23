@@ -27,7 +27,7 @@ def modify_csv(filename, column_index, words, max):
 
 
 # Beispielaufruf
-filename = '/Users/tomherrmann/Developer/BeatBot/Neural-Network/FMA/ten_genres_old_plus_fma_data.csv'
+filename = '/FMA/ten_genres_old_plus_fma_data.csv'
 column_index = 41  # Index der Spalte, die überprüft werden soll (0-basiert)
 words = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 'pop', 'reggae', 'rock']
 max = 1300
