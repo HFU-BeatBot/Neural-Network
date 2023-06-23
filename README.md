@@ -32,7 +32,13 @@ The workflow for both models is similar, and the goal is the same - to classify 
 ##### FMA small:
 - fma_small: 8,000 tracks of 30s, 8 balanced genres (GTZAN-like) (7.2 GiB)
 - Download the dataset from this website: [FMA Small](https://os.unil.cloud.switch.ch/fma/fma_small.zip)
-- The 8 involves genres are: electronic, experimental, folk, hiphop, instrumental, international, pop and rock.
+- The 8 involved genres are: electronic, experimental, folk, hiphop, instrumental, international, pop and rock.
+
+##### FMA large:
+- fma_large: 106,574 tracks of 30s, 161 unbalanced genres (93 GiB)
+- Download the dataset from this website: [FMA Large](https://os.unil.cloud.switch.ch/fma/fma_large.zip)
+- The 16 main genres are: electronic, experimental, folk, hiphop, instrumental, international, pop, rock, jazz, classical,
+  country, spoken, blues, soul/rnb, old-time/histroic and easy listening
 
 ## Code
 The Python codes are available in both the FMA and GTZAN folders with slight modifications.
