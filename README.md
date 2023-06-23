@@ -109,6 +109,23 @@ For the GTZAN data
 - The resulting CSV file is saved as gtzan_noisy_songs.csv in the "data" folder.
 - The resulting noisy versions songs is saved in the "GTZAN_Noisy_Songs" folder.
 
+### FMALargeSortGTZANGenres.py
+This file is used to automatically assign the songs from the FMA_large (https://os.unil.cloud.switch.ch/fma/fma_large.zip 93GB) data to the GTZAN genre folders.
+It automatically creates the GTZAN genre folders at given location and moves the songs that fit the GTZAN genres into the folders.
+
+To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') with your own Username.
+
+Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
+and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_large/).
+
+### FMASortMP3
+This file, much like FMALargeGTZANGenres.py, is used to assign the songs from FMA_small (https://os.unil.cloud.switch.ch/fma/fma_small.zip 8GB) data
+to genre folders, this time the 8 genres specified in fma_small (electronic, experimental, folk, hiphop, instrumental, international, pop and rock).
+
+To use this file on Windows replace <User> ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') with your own Username.
+Place the tracks.csv (https://os.unil.cloud.switch.ch/fma/fma_metadata.zip 342 MB) at ('C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_metadata/tracks.csv') 
+and the mp3 files at (C:/Users/<User>/PycharmProjects/Neural-Network/data/fma_small/).
+
 ### Usage
 1. Ensure that you have the required dependencies installed.
 2. Download the dataset and place the necessary files in the "data" directory,for both GTZAN and FMA.
@@ -116,4 +133,4 @@ For the GTZAN data
 4. The trained model will be saved as ".h5" Format for future use.
 
 
-# TO BE COTINUED
+# TO BE CONTINUED

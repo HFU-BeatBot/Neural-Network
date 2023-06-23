@@ -343,7 +343,6 @@ for index, row in rock_tracks_data.iterrows():
     except (Exception,):
         print('File does not Exist')
 
-'''
 # .mp3 to .wav conversion (pip install ffmpeg-downloader) & (ffdl install --add-path) required
 
 # Specify folder path containing the .mp3 files
@@ -383,4 +382,3 @@ convert_folder_files(folder_path_metal)
 convert_folder_files(folder_path_pop)
 convert_folder_files(folder_path_reggae)
 convert_folder_files(folder_path_rock)
-'''
