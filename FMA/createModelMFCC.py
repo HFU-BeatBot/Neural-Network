@@ -9,7 +9,7 @@ from joblib import dump
 from keras import models, layers, callbacks
 
 # Read the dataset
-data = pd.read_csv('data/fma_small_data.csv')
+data = pd.read_csv('data/data.csv')
 data.head()
 
 # Dropping unnecessary columns
