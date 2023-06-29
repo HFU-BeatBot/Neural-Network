@@ -86,7 +86,7 @@ def makeCSV(partLength=5, genresOfLibrary='blues classical country disco hiphop 
                 newAudioPart.export('tmp.wav', format='wav')
                 print("export geklappt")
                 to_append = generateArrayOfMeanAndSTD('tmp.wav', filename, g)
-                file = open(, 'a', newline='')
+                file = open(nameOfDataCSV, 'a', newline='')
                 with file:
                     writer = csv.writer(file)
                     writer.writerow(to_append.split())
@@ -95,7 +95,7 @@ def makeCSV(partLength=5, genresOfLibrary='blues classical country disco hiphop 
                 addNoise(signal, sr, 'tmp.wav')
                 to_append = generateArrayOfMeanAndSTD('tmp.wav', filename + '_gaussian', g)
                 # filling the data of the wav part into the csv
-                file = open('nameOfDataCSV', 'a', newline='')
+                file = open(nameOfDataCSV, 'a', newline='')
                 with file:
                     writer = csv.writer(file)
                     writer.writerow(to_append.split())
