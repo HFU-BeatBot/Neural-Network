@@ -23,4 +23,5 @@ t = classifySongOnModel(song: Any,
 # gtzan         test accuracy: 0.826377272605896
 # fma + noisy   test accuracy: 0.8433318138122559
 # fma           test accuracy: 0.6334486603736877
-
+# jLibrosa Gtzan     :
+# jLibrosa FMA       : 0.6498094797134399
