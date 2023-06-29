@@ -20,9 +20,6 @@ def makeModel(csvFilePath = 'data.csv'):
     from keras import layers
     from keras import callbacks
 
-    tf.keras.utils.set_random_seed(
-        1
-    )
 
     data = pd.read_csv(csvFilePath)
     data = data.iloc[:, 1:]

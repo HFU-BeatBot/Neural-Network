@@ -8,7 +8,7 @@ from audiomentations import Compose, AddGaussianNoise, PitchShift, HighPassFilte
 
 def addNoise(signal, sr, wavName = "Gaussian", fileType ="wav"):
 
-    print("Start")
+    print("addNoise")
     augment = Compose([
         AddGaussianNoise(min_amplitude=0.01, max_amplitude=0.01, p=1),
         #PitchShift(min_semitones=-8, max_semitones=8, p=1),
