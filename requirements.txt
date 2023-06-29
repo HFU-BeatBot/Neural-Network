@@ -9,3 +9,9 @@ pydub~=0.25.1
 soundfile~=0.12.1
 joblib~=1.2.0
 ffmpeg~=1.4
+# if ffmpeg missing error:
+# pip install ffmpeg-downloader
+# ffdl install --add-path
+# execute both command in IDE Terminal / Linux Terminal
+audiomentations~=0.31.0
+
