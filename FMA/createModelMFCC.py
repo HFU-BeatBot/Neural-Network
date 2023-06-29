@@ -9,7 +9,7 @@ from joblib import dump
 from keras import models, layers, callbacks
 
 # Read the dataset
-data = pd.read_csv('data/fma_metadata/data.csv')
+data = pd.read_csv('data/data.csv')
 data.head()
 
 # Dropping unnecessary columns
@@ -25,7 +25,7 @@ print(y)
 # Normalizing the data
 scaler = StandardScaler()
 X = scaler.fit_transform(np.array(data.iloc[:, :-1], dtype=float))
-dump(scaler, open('../scaler.bin', 'wb'), compress=True)  # Save scaler
+dump(scaler, open('fma_scaler.bin', 'wb'), compress=True)  # Save scaler
 print("Saved scaler to disk as .bin")
 
 # Split dataset into train and test sets
@@ -90,7 +90,7 @@ history_df.loc[0:, ['loss', 'val_loss']].plot()
 plt.xlabel("Epochs")
 plt.ylabel("Loss")
 plt.title("Loss + Val_loss")
-plt.savefig('loss_val_loss_with_earlystopping.png')
+plt.savefig('fma_loss_val_loss_with_earlystopping.png')
 plt.show()
 
 # Predictions

@@ -1,6 +1,6 @@
 import csv
 import os
-
+import warnings
 import librosa
 import numpy as np
 
@@ -13,11 +13,11 @@ header += ' label'
 header = header.split()
 
 # create the directory for the CSV file
-directory = 'data/fma_metadata/'
+directory = 'data/'
 os.makedirs(directory, exist_ok=True)
 
 # create the file path for the CSV file
-file_path = os.path.join(directory, 'data.csv')
+file_path = os.path.join(directory, 'fma_small_data.csv')
 file = open(file_path, 'w', newline='')
 
 with file:
@@ -25,30 +25,42 @@ with file:
     writer.writerow(header)
 
 # list of genres
-genres = 'blues classical country disco hiphop jazz metal pop reggae rock'.split()
+genres = 'electronic experimental folk hiphop instrumental international pop rock'.split()
 
 # iterate over each genre
 for g in genres:
-    folder_path = os.path.join(f'genres/{g}')
+    folder_path = os.path.join(f'fma_small_wav/{g}')
     filenames = [filename for filename in os.listdir(folder_path) if not filename.startswith('.')]
 
     # iterate over each file in the genre folder
     for filename in filenames:
-        songname = f'./genres/{g}/{filename}'
-        y, sr = librosa.load(songname, mono=True, duration=3)
-        mfcc = librosa.feature.mfcc(y=y, sr=sr)
-        to_append = f'{filename}'
+        songname = f'./fma_small_wav/{g}/{filename}'
 
-        # extract mean and standard deviation of each MFCC coefficient
-        for e in mfcc:
-            to_append += f' {np.mean(e)}'
-            to_append += f' {np.std(e)}'
+        try:
+            # Load the audio file
+            with warnings.catch_warnings():
+                warnings.filterwarnings('ignore')
+                y, sr = librosa.load(songname, mono=True, duration=30)
 
-        to_append += f' {g}'
+            # If the duration of the song is equal to 30 sec or less than 30 sec, print
+            if len(y) == sr * 30:
+                print(f'file: {songname} - Song written to .CSV file')
 
-        # append the data to the CSV file
-        file = open(file_path, 'a', newline='')
-        with file:
-            writer = csv.writer(file)
-            writer.writerow(to_append.split())
+            mfcc = librosa.feature.mfcc(y=y, sr=sr)
+            to_append = f'{filename}'
 
+            # extract mean and standard deviation of each MFCC coefficient
+            for e in mfcc:
+                to_append += f' {np.mean(e)}'
+                to_append += f' {np.std(e)}'
+
+            to_append += f' {g}'
+
+            # append the data to the CSV file
+            with open(file_path, 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(to_append.split())
+
+        # Exceptions handel
+        except Exception as e:
+            print(f'Skipped file: {songname} - Error')
