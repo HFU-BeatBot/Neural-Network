@@ -1,55 +1,38 @@
 import librosa
-import pandas as pd
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
-# '%matplotlib inline
-import os
-import csv
-
-from pydub import AudioSegment
-# Preprocessing
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-# Keras
-import keras
-from keras import models
-from keras import layers
 from joblib import load
 
 print("classifySongOnModel ready")
+
 def classifySongOnModel(song, model, scaler):
     print("Start classifySongOnModel()")
-    # Example of how the song string could look like:
-    # song = 'Bob Marley & The Wailers - Buffalo Soldier (Official Music Video).mp3'
 
-    # Load the song extract the mfcc values
+    # Load the song and extract the MFCC values
     y, sr = librosa.load(song, mono=True)
     mfcc = librosa.feature.mfcc(y=y, sr=sr)
 
-    # filling the mfcc values into an array
+    # Fill the MFCC values into an array
     songToArray = []
     for e in mfcc:
         songToArray.append(np.mean(e))
         songToArray.append(np.std(e))
 
-    # tranform the array to numpy array
+    # Transform the array into a numpy array
     numpySongArray = np.array([songToArray], dtype=float)
 
-    # scale the numpy array with the models scaler
+    # Scale the numpy array using the model's scaler
     standardScaler = load(scaler)
     numpySongArray = standardScaler.transform(numpySongArray)
 
-    # printing the values of the numpy array. Is not neccesary, it is just for control purpose.
+    # Print the values of the numpy array (for control purposes)
     print('NumpySongArray:')
     print(numpySongArray)
 
-    # the model predicts the genre of that song and print it into the console and return it
+    # Load the model and predict the genre of the song
     model = tf.keras.models.load_model(model)
     prediction = model.predict(numpySongArray)
     print(np.argmax(prediction[0]))
     print("End classifySongOnModel()")
+
     return np.argmax(prediction[0])
-
-
-
